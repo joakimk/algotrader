@@ -27,5 +27,6 @@ Core concepts:
 - [ ] Max loss per day by default.
   - Some days just don't behave like you expect, better to just wait for the next one.
 - [ ] No magic values in strategies, everything is configurable.
-  - This also allows for automatically figuring out the best config by brute force testing, or something more clever if possible.
+  - This allows different settings per market and changing settings over time.
+  - This also allows for automatically figuring out the best config (possibly by brute force testing).
 - [ ] More things, TODO
