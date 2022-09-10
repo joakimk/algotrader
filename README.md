@@ -20,7 +20,7 @@ Core concepts:
   - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
 - [ ] Backtests are two step verification.
   - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
-- [ ] It always exits all positions before the end of the day.
+- [ ] Always exit all positions before the end of the day.
   - This greatly simplifies many things by avoiding fees, gap up/down, leverage rebaseing, ...
 - [ ] Fixed amount positions by default.
   - This will make an account grow slower but safer since it avoids huge losses if you start going exponential in the wrong direction.
