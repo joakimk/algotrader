@@ -4,7 +4,7 @@
 
 WIP: Work in progress. Nothing usable yet.
 
-Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in rust and also your own API to your specific broker, thus you probably need to be a developer (or known one) to use this.
+Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in rust and also your own HTTP API (in any language) to your specific broker, thus you probably need to be a developer (or known one) to use this.
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020.
 
