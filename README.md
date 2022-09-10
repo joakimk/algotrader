@@ -14,12 +14,14 @@ Core concepts:
 
 - [ ] Loss is always a possible outcome.
   - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not to go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
-- [ ] Backtests are essential.
-  - Only trade what has been proven to work historically.
-- [ ] Backtests should be nearly instant.
-  - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
-- [ ] Backtests are two step verification.
-  - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
+- [ ] Backtests
+  - [ ] Backtests are essential.
+    - Only trade what has been proven to work historically.
+  - [ ] Backtests should be nearly instant.
+    - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
+  - [ ] Backtests are two step verification.
+    - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
+  - [ ] Backtests fuzz as much as possible to reveal accidentally working strategies.
 - [ ] Always exit all positions before the end of the day.
   - This greatly simplifies many things by avoiding fees, gap up/down, leverage rebaseing, ...
 - [ ] Fixed amount positions by default.
