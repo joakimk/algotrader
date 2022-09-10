@@ -10,8 +10,6 @@ I am by no means an expert in any of this, but I have some experience from explo
 
 ## Readme driven development
 
-Things will be checked as they are implemented, until then it's only ideas.
-
 Core concepts:
 
 - [ ] Loss is always a possible outcome.
