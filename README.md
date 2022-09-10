@@ -14,9 +14,13 @@ Things will be checked as they are implemented, until then it's only ideas.
 
 Core concepts:
 
-- [ ] Backtest but not using all available data, then confirm using remaining data.
-- [ ] Backtest speed is very important. You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
-- [ ] It always exits all positions before the end of the day. This greatly simplifies things.
-- [ ] (configurable) fixed amount positions by default. This avoids huge losses if you start going exponential in the wrong direction.
-- [ ] (configurable) max loss per day by default.
+- [ ] Backtests are core to this.
+  - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
+- [ ] Backtest speed is very important.
+  - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
+- [ ] It always exits all positions before the end of the day.
+  - This greatly simplifies many things.
+- [ ] Fixed amount positions by default.
+  - This avoids huge losses if you start going exponential in the wrong direction.
+- [ ] Max loss per day by default.
 - [ ] More things, TODO
