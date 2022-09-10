@@ -30,3 +30,7 @@ Core concepts:
   - This allows different settings per market and changing settings over time.
   - This also allows for automatically figuring out the best config (possibly by brute force testing).
 - [ ] More things, TODO
+
+## Development
+
+There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid TradingView account.
