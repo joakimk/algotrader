@@ -50,3 +50,7 @@ make
 ## Contributions
 
 Contributions are very welcome, but be aware I don't always have a lot of spare time for this project so it could take some time before I can review it. The more well made, consistent with the style of the existing project, and well tested it is the easier it is to include it.
+
+## Broker integration ideas
+
+- One possibility it to run this on an hourly timeframe and make a broker API that consists of notifying you to buy or sell manually.
