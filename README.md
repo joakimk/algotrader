@@ -13,7 +13,7 @@ I am by no means an expert in any of this, but I have some experience from explo
 Core concepts:
 
 - [ ] Loss is always a possible outcome.
-  - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not go go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
+  - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not to go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
 - [ ] Backtests are essential.
   - Only trade what has been proven to work historically.
 - [ ] Backtests should be nearly instant.
