@@ -1,8 +1,8 @@
 # algotrader
 
-## Intro
-
 WIP: Work in progress. Nothing usable yet.
+
+## Intro
 
 Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in rust and also your own HTTP API (in any language) to your specific broker, thus you probably need to be a developer (or known one) to use this.
 
