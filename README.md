@@ -53,4 +53,4 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 
 ## Broker integration ideas
 
-- One possibility it to run this on an hourly timeframe and make a broker API that consists of notifying you to buy or sell manually.
+- One possibility it to run this on an hourly timeframe and make a broker API that consists of only reading market data and then notifying you to buy or sell manually.
