@@ -26,4 +26,6 @@ Core concepts:
   - This will make an account grow slower but safer since it avoids huge losses if you start going exponential in the wrong direction.
 - [ ] Max loss per day by default.
   - Some days just don't behave like you expect, better to just wait for the next one.
+- [ ] No magic values in strategies, everything is configurable.
+  - This also allows for automatically figuring out the best config by brute force testing, or something more clever if possible.
 - [ ] More things, TODO
