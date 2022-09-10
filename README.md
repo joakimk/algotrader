@@ -34,3 +34,8 @@ Core concepts:
 ## Development
 
 There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. The good news is that it's all the same, just timestamps and prices. The bad news is they don't always agree on what a sensible timezone is for the data (UTC?) so you need to be a bit careful and verify you get it right.
+
+
+## Contributions
+
+Contributions are very welcome, but be aware I don't always have a lot of spare time for this project so it could take some time before I can review it. The more well made, consistent with the style of the existing project, and well tested it is the easier it is to include it.
