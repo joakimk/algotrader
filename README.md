@@ -14,6 +14,8 @@ Things will be checked as they are implemented, until then it's only ideas.
 
 Core concepts:
 
+- [ ] Loss is always a possible outcome.
+  - Never trade anything you can't loose.
 - [ ] Backtests are core to this.
   - Do not trade anything that has not been proven to work historically.
 - [ ] Backtests should be nearly instant.
