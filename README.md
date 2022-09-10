@@ -16,11 +16,12 @@ Core concepts:
 
 - [ ] Backtests are core to this.
   - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
-- [ ] Backtest speed is very important.
+- [ ] Backtests should be nearly instant.
   - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
 - [ ] It always exits all positions before the end of the day.
   - This greatly simplifies many things.
 - [ ] Fixed amount positions by default.
   - This avoids huge losses if you start going exponential in the wrong direction.
 - [ ] Max loss per day by default.
+  - Some days just don't behave like you expect, better to just wait for the next one.
 - [ ] More things, TODO
