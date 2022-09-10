@@ -21,7 +21,8 @@ Core concepts:
     - You should not feel like skipping backtesting because it's slow, or have to iterate slowly when developing algorithms.
   - [ ] Backtests are two step verification.
     - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
-  - [ ] Backtests fuzz as much as possible to reveal accidentally working strategies.
+  - [ ] Backtests fuzz.
+    - By changing initial conditions (like date) it can reveal if a strategy only works when run on a specific day.
 - [ ] Always exit all positions before the end of the day.
   - This greatly simplifies many things by avoiding fees, gap up/down, leverage rebaseing, ...
 - [ ] Fixed amount positions by default.
@@ -43,7 +44,7 @@ There are very few free data sources that are good so I can't include any data i
 Import data.
 
 ```
-script/import_tradingview_csv ~/Downloads/... # TODO...
+make import
 ```
 
 Run backtests and show results.
