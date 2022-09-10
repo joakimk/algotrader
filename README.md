@@ -29,6 +29,9 @@ Core concepts:
 - [ ] No magic values in strategies, everything is configurable.
   - This allows different settings per market and changing settings over time.
   - This also allows for automatically figuring out the best config (possibly by brute force testing).
+- [ ] One active position at a time.
+  - This keeps the code simple and reduces risk.
+  - This does not mean you can't have many strategies looking for leads at the same time.
 - [ ] More things, TODO
 
 ## Development
