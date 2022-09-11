@@ -4,13 +4,13 @@ WIP: Work in progress. Nothing usable yet.
 
 ## Intro
 
-Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in Rust (to enable quick backtests) and also your own HTTP API (in any language) to your specific broker. Thus you probably need to be a developer to use this.
+Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in Rust (to enable quick backtests) and also your own HTTP API (in any language) to your specific broker.
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
 
 ## Readme driven development
 
-Core concepts:
+Core concepts and design ideas:
 
 - [ ] Loss is always a possible outcome.
   - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not to go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
@@ -32,10 +32,8 @@ Core concepts:
 - [ ] No magic values in strategies, everything is configurable.
   - This allows different settings per market and changing settings over time.
   - This also allows for automatically figuring out the best config (possibly by brute force testing).
-- [ ] One active position at a time.
-  - This keeps the code simple and reduces risk.
-  - This does not mean you can't have many strategies looking for leads at the same time.
-- [ ] More things, TODO
+- [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
+  - One possibility is selecting strategies and their settings automatically based on what's working recently.
 
 ## Development
 
