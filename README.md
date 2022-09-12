@@ -23,12 +23,14 @@ Core concepts and design ideas:
     - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
   - [ ] Backtests fuzz.
     - By changing initial conditions (like date) it can reveal if a strategy only works when run on a specific day.
-- [ ] Always exit all positions before the end of the day.
-  - This greatly simplifies many things by avoiding fees, gap up/down, leverage rebaseing, ...
+- [ ] Focused on day trading
+   - The market might be a bit more unreliable on lower timeframes, but at the same time it allows you to work with many different timescales down to seconds.
+   - Also allows faster feedback on what works and what does not since trades play out over the day instead of days or weeks.
+   - Another oppourtunity it opens up is parallel backtesting of multiple days at the same time.
+   - Avoids issues with holding positions over multiple days like fees, gap up/down, leverage rebaseing (loosing 50% one day and then gaining 50% the next means you now have 75% of the original amount, e.g. `1000 * 0.5 * 1.5 = 750`), ...
+   - Max loss per day by default since some days just don't behave like you expect, better to just wait for the next one.
 - [ ] Fixed amount positions by default.
   - This will make an account grow slower but safer since it avoids huge losses if you start going exponential in the wrong direction.
-- [ ] Max loss per day by default.
-  - Some days just don't behave like you expect, better to just wait for the next one.
 - [ ] No magic values in strategies, everything is configurable.
   - This allows different settings per market and changing settings over time.
   - This also allows for automatically figuring out the best config (possibly by brute force testing).
