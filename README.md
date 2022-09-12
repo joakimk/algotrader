@@ -44,6 +44,8 @@ Core concepts and design ideas:
 
 - [ ] Properties to show in result
   - [ ] Maximum drawdown
+  - [ ] Exposure time by strategy
+    - [ ] Adjusted result given it would be exposed 100% of the time.
 
 ## Development
 
@@ -76,3 +78,4 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 ## Various algorithm inspiration
 
 - https://youtu.be/4k1_1cLoMKk?t=198
+- https://www.youtube.com/watch?v=_9Bmxylp63Y 
