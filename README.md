@@ -38,7 +38,7 @@ Core concepts and design ideas:
     - This allows different settings per market and changing settings over time.
     - This also allows for automatically figuring out the best config (possibly by brute force testing).
   - [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
-    - One possibility is selecting strategies and their settings automatically based on what's working recently.
+  - [ ] Ideally it should be able to select strategies and settings based on the recent market conditions, or just what works best in backtests recently.
 
 ## TODO
 
