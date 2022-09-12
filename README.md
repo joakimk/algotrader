@@ -42,7 +42,7 @@ Core concepts and design ideas:
 
 ## Development
 
-There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. The good news is that it's all the same, just timestamps and prices (open, low, high, close). The bad news is they don't always agree on what a sensible timezone is for the data (UTC?) so you need to be a bit careful and verify you get it right.
+There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides open/close/high/low prices.
 
 Import data.
 
