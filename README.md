@@ -40,6 +40,11 @@ Core concepts and design ideas:
   - [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
     - One possibility is selecting strategies and their settings automatically based on what's working recently.
 
+## TODO
+
+- [ ] Properties to show in result
+  - [ ] Maximum drawdown
+
 ## Development
 
 There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides open/close/high/low prices.
@@ -67,3 +72,7 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 ## Related resources
 
 - https://www.youtube.com/c/CriticalTrading
+
+## Various algorithm inspiration
+
+- https://youtu.be/4k1_1cLoMKk?t=198
