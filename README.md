@@ -14,6 +14,9 @@ Core concepts and design ideas:
 
 - [ ] Loss is always a possible outcome.
   - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not to go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
+- [ ] Fixed amount positions by default.
+  - This will make an account grow slower but safer since it avoids huge losses if you start going exponential in the wrong direction.
+
 - [ ] Backtests
   - [ ] Backtests are essential.
     - Only trade what has been proven to work historically.
@@ -23,19 +26,19 @@ Core concepts and design ideas:
     - Only use all available data for final verification to avoid tailoring algorithms to the specific historic data.
   - [ ] Backtests fuzz.
     - By changing initial conditions (like date) it can reveal if a strategy only works when run on a specific day.
-- [ ] Focused on day trading
+- [ ] Day trading
    - The market might be a bit more unreliable on lower timeframes, but at the same time it allows you to work with many different timescales down to seconds.
-   - Also allows faster feedback on what works and what does not since trades play out over the day instead of days or weeks.
-   - Another oppourtunity it opens up is parallel backtesting of multiple days at the same time.
-   - Avoids issues with holding positions over multiple days like fees, gap up/down, leverage rebaseing (loosing 50% one day and then gaining 50% the next means you now have 75% of the original amount, e.g. `1000 * 0.5 * 1.5 = 750`), ...
-   - Max loss per day by default since some days just don't behave like you expect, better to just wait for the next one.
-- [ ] Fixed amount positions by default.
-  - This will make an account grow slower but safer since it avoids huge losses if you start going exponential in the wrong direction.
-- [ ] No magic values in strategies, everything is configurable.
-  - This allows different settings per market and changing settings over time.
-  - This also allows for automatically figuring out the best config (possibly by brute force testing).
-- [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
-  - One possibility is selecting strategies and their settings automatically based on what's working recently.
+   - Gives faster feedback on what works and what does not since trades play out over the day instead of days or weeks.
+   - Allows for parallel backtesting of multiple days at the same time.
+   - Avoids issues with holding positions over multiple days like fees, gap up/down, leverage rebaseing (using say 10x leverage, the underlying market goes down 5% the first day and then up 5% the next, you loose 50% the first day and then gain 50% the next means you now have 75% of the original amount, e.g. `1000 * 0.5 * 1.5 = 750`), ...
+   - Using max loss per day by default since some days just don't behave like you expect, better to just wait for the next one.
+
+- [ ] Strategies
+  - [ ] No magic values in strategies, everything is configurable.
+    - This allows different settings per market and changing settings over time.
+    - This also allows for automatically figuring out the best config (possibly by brute force testing).
+  - [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
+    - One possibility is selecting strategies and their settings automatically based on what's working recently.
 
 ## Development
 
