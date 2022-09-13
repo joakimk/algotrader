@@ -79,3 +79,4 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 
 - https://youtu.be/4k1_1cLoMKk?t=198
 - https://www.youtube.com/watch?v=_9Bmxylp63Y 
+- https://www.youtube.com/watch?v=qMXUMjckVhU&ab_channel=TheTransparentTrader
