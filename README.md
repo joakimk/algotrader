@@ -51,6 +51,20 @@ Core concepts and design ideas:
   - [ ] Exposure time by strategy
     - [ ] Adjusted result given it would be exposed 100% of the time.
 
+# Goal1: Pre-alpha (backtest, two strategies, hardcoded config)
+
+- [ ] TradingView import for stock data.
+- [ ] Two different stategies (probably one for ranging and one for trending markets).
+- [ ] Be able to run on 5 stocks that are as unrelated as possible.
+  - [ ] Be able to run one stock without considering days.
+  - [ ] Separating into days and running days in parallel.
+  - [ ] Run more than one stock at the same time.
+  - [ ] Apply strategies and print where it would buy.
+  - [ ] Save active position in memory, sell it at end of day if needed.
+  - [ ] Collect results and display them.
+  - [ ] Manually verify that the trades it took makes sense in reality.
+- [ ] Bonus: Full system testing setup (once I have explored what data the system will return, etc.)
+
 ## Development
 
 There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides open/close/high/low prices.
