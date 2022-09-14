@@ -40,6 +40,10 @@ Core concepts and design ideas:
   - [ ] Many strategies can be active at the same time looking at the same or different markets. There can be many concurrent trades but it's limited to 1 by default.
   - [ ] Ideally it should be able to select strategies and settings based on the recent market conditions, or just what works best in backtests recently.
 
+- [ ] Testing
+  - This will be tested (as in automated tests) in a way that allows for a lot of flexibility of implementation. I'm biasing this towards full system tests, e.g. given this config and this data, assert which trades where executed.
+  - Unit tests will be used where it makes a lot of sense like for calculations like moving average, ATR, etc.
+
 ## TODO
 
 - [ ] Properties to show in result
