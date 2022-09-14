@@ -1,0 +1,40 @@
+[setup.omx-stocks]
+  symbols = [ "AZA", "SWED-A" ]
+  timeframe = "15m"
+  strategies = [ ] # wip
+  market = "markets.omx" # one or several? or prefix that in symbols?
+  # broker vs market is kinda fuzzy, perhaps have some dup
+  broker = "broker.foo"
+  broker-account-id = "1234"
+  active = true
+
+[markets.omx]
+  symbols = [ "SAS", "SWED-A", "AZA" ]
+  min-buy-amount = 1
+  average-spread-percent = 0 # todo
+  transaction-fee = 0
+
+  [markets.omx.hours]
+    open = [ 9, 0 ]
+    close = [ 17, 30 ]
+  [markets.omx.hours.exceptions]
+    dates = [ "2022-09-01", "2022-12-24" ]
+    open = [ 9, 0 ]
+    close = [ 12, 30 ]
+
+[markets.certificates]
+  symbols = [ "BULL SWED-A X10 10" ]
+  min-buy-amount = 1300 # a little padding to not sell with fees if it goes down below 1000
+  average-spread-percent = 0 # todo
+  transaction-fee = 0 # free above 1000
+  [markets.certificates.hours]
+    open = [ 9, 0 ] # some open earlier?
+    close = [ 20, 0 ]
+  [markets.omx.hours.exceptions]
+    dates = [ "2022-09-01", "2022-12-24" ] # not real
+    open = [ 9, 0 ]
+    close = [ 20, 0 ]
+
+[broker.foo]
+  url = ""
+  token = ""
