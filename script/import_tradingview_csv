@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require "date"
+require "json"
+
+download_path = "#{ENV["HOME"]}/Downloads"
+list = Dir.children(download_path).select { |x|
+  x.match(/,.+_(.{5})\.csv/)
+}.group_by { |x|
+  x.split(",").first
+}.map { |g, files|
+  files.sort_by { |f| File.ctime("#{download_path}/#{f}") }.last
+}
+
+def build_bars(lines)
+  lines.map { |line|
+    timestamp, open, high, low, close, *_rest = line.split(",")
+
+    # wip
+  }
+end
+
+#  .match(/.+_(.+?)\, (.+?)_/)
+
+p list
