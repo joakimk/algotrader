@@ -53,7 +53,7 @@ Core concepts and design ideas:
 
 # Goal1: Pre-alpha (backtest, two strategies, hardcoded config)
 
-- [ ] TradingView import for stock data.
+- [x] TradingView import for stock data.
 - [ ] Two different stategies (probably one for ranging and one for trending markets).
 - [ ] Be able to run on 5 stocks that are as unrelated as possible.
   - [ ] Be able to run one stock without considering days.

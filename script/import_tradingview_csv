@@ -16,10 +16,28 @@ def build_bars(lines)
   lines.map { |line|
     timestamp, open, high, low, close, *_rest = line.split(",")
 
-    # wip
+    {
+      timestamp: timestamp.to_i,
+      open: open.to_f,
+      high: high.to_f,
+      low: low.to_f,
+      close: close.to_f,
+    }
   }
 end
 
 #  .match(/.+_(.+?)\, (.+?)_/)
 
-p list
+x = list.first
+path = "#{download_path}/#{x}"
+bars = build_bars(File.readlines(path)[1..-1])
+
+m = x.match(/.+_(.+?)\, (.+?)_/)
+symbol = m[1]
+timeframe = m[2]
+
+system("mkdir -p data/1 data/5 data/15")
+
+output_path = "data/#{timeframe}/#{symbol}.json"
+puts "Writing #{output_path}"
+File.write(output_path, bars.to_json)
