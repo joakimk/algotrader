@@ -67,7 +67,7 @@ Core concepts and design ideas:
 
 ## Development
 
-There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides open/close/high/low prices.
+There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides timestamp/open/close/high/low and volume.
 
 Import data.
 
