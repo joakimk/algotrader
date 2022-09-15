@@ -14,7 +14,7 @@ list = Dir.children(download_path).select { |f|
 
 def build_bars(lines)
   lines.map { |line|
-    timestamp, open, high, low, close, *_rest = line.split(",")
+    timestamp, open, high, low, close, volume, *_rest = line.split(",")
 
     {
       timestamp: timestamp.to_i,
@@ -22,6 +22,7 @@ def build_bars(lines)
       high: high.to_f,
       low: low.to_f,
       close: close.to_f,
+      volume: volume.to_i
     }
   }
 end

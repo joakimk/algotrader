@@ -1,14 +1,30 @@
 use std::fs;
 use serde::Deserialize;
 use regex::Regex;
+use chrono::prelude::*;
+use chrono::Local;
+use std::time::{UNIX_EPOCH, Duration};
+
 
 #[derive(Debug, Deserialize)]
-pub struct Bar {
-    pub timestamp: i64,
+pub struct RawBar {
+    pub timestamp: u64,
     pub open: f32,
     pub high: f32,
     pub low: f32,
     pub close: f32,
+    pub volume: u64,
+}
+
+#[derive(Debug)]
+pub struct Bar {
+    pub time: DateTime<Local>,
+    pub timestamp: u64,
+    pub open: f32,
+    pub high: f32,
+    pub low: f32,
+    pub close: f32,
+    pub volume: u64,
 }
 
 #[derive(Debug)]
@@ -19,7 +35,7 @@ pub struct Chart {
 }
 
 fn main() {
-    let chart = load_chart("data/1/CAST.json");
+    let chart = load_chart("data/15/AZA.json");
 
     dbg!(chart);
 }
@@ -28,8 +44,24 @@ fn load_chart(path : &str) -> Chart {
     let data = fs::read_to_string(path)
         .expect("Unable to read file at {path}.");
 
-    let bars: Vec<Bar> = serde_json::from_str(&data)
+    let raw_bars: Vec<RawBar> = serde_json::from_str(&data)
         .expect("JSON in {path} does not have correct format.");
+
+    let mut bars : Vec<Bar> = Vec::new();
+    for raw_bar in raw_bars {
+        let duration = UNIX_EPOCH + Duration::from_secs(raw_bar.timestamp);
+        let time = DateTime::<Local>::from(duration);
+
+        bars.push(Bar {
+            time: time,
+            timestamp: raw_bar.timestamp,
+            open: raw_bar.open,
+            high: raw_bar.high,
+            low: raw_bar.low,
+            close: raw_bar.close,
+            volume: raw_bar.volume,
+        })
+    };
 
     let re = Regex::new(r"data/(.+)/(.+)\.json").unwrap();
     let cap = re.captures(path).unwrap();
