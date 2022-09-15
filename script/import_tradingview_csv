@@ -4,10 +4,10 @@ require "date"
 require "json"
 
 download_path = "#{ENV["HOME"]}/Downloads"
-list = Dir.children(download_path).select { |x|
-  x.match(/,.+_(.{5})\.csv/)
-}.group_by { |x|
-  x.split(",").first
+list = Dir.children(download_path).select { |f|
+  f.match(/,.+_(.{5})\.csv/)
+}.group_by { |f|
+  f.split(",").first
 }.map { |g, files|
   files.sort_by { |f| File.ctime("#{download_path}/#{f}") }.last
 }
@@ -28,16 +28,17 @@ end
 
 #  .match(/.+_(.+?)\, (.+?)_/)
 
-x = list.first
-path = "#{download_path}/#{x}"
-bars = build_bars(File.readlines(path)[1..-1])
+list.each do |f|
+  path = "#{download_path}/#{f}"
+  bars = build_bars(File.readlines(path)[1..-1])
 
-m = x.match(/.+_(.+?)\, (.+?)_/)
-symbol = m[1]
-timeframe = m[2]
+  m = f.match(/\w_(.+?)\, (.+?)_/)
+  symbol = m[1]
+  timeframe = m[2]
 
-system("mkdir -p data/1 data/5 data/15")
+  system("mkdir -p data/1 data/5 data/15")
 
-output_path = "data/#{timeframe}/#{symbol}.json"
-puts "Writing #{output_path}"
-File.write(output_path, bars.to_json)
+  output_path = "data/#{timeframe}/#{symbol}.json"
+  puts "Writing #{output_path}"
+  File.write(output_path, bars.to_json)
+end
