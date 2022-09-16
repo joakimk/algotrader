@@ -93,6 +93,10 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 
 - https://www.youtube.com/c/CriticalTrading
 
+## Various backtest inspiration
+
+- Review what is the most essential data to show with results based on The output shown here https://youtu.be/tbronjDYeUs?t=594
+
 ## Various algorithm inspiration
 
 - https://youtu.be/4k1_1cLoMKk?t=198
