@@ -5,7 +5,6 @@ use chrono::prelude::*;
 use chrono::Local;
 use std::time::{UNIX_EPOCH, Duration};
 
-
 #[derive(Debug, Deserialize)]
 pub struct RawBar {
     pub timestamp: u64,
