@@ -44,7 +44,7 @@ Core concepts and design ideas:
   - This will be tested (as in automated tests) in a way that allows for a lot of flexibility of implementation. I'm biasing this towards full system tests, e.g. given this config and this data, assert which trades where executed.
   - Unit tests will be used where it makes a lot of sense like for calculations like moving average, ATR, etc.
 
-## TODO
+## Various notes
 
 - [ ] Properties to show in result
   - [ ] Maximum drawdown

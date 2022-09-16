@@ -33,8 +33,25 @@ pub struct Chart {
     pub bars : Vec<Bar>,
 }
 
+// This is the data strategies will have to make decisions
+// based on single charts or correlations.
+//pub struct Watchlist {
+//    pub charts : Vec<Chart>,
+//}
+//
+//pub struct Setup {
+//    pub watchlist : Watchlist,
+//    pub strategies : Vec<Strategy>,
+//    pub active : Bool
+//}
+
 fn main() {
     let chart = load_chart("data/15/AZA.json");
+
+    // next:
+    // - separate into days and run them in parallel
+    // - figure out how simulated trading would work
+    // - run more than one stock at the same time
 
     dbg!(chart);
 }
