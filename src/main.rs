@@ -67,7 +67,8 @@ fn main() {
     // - figure out how simulated trading would work
     // - run more than one stock at the same time
 
-    dbg!(&chart.days[305]);
+    dbg!(&chart.bars[0]);
+    dbg!(&chart.bars[10293]);
 }
 
 fn load_chart(path : &str) -> Chart {
@@ -82,12 +83,12 @@ fn load_chart(path : &str) -> Chart {
     let raw_bars: Vec<RawBar> = serde_json::from_str(&data)
         .expect("JSON in {path} does not have correct format.");
 
-    let mut bars : Vec<Bar> = Vec::new();
+    let mut all_bars : Vec<Bar> = Vec::new();
     for raw_bar in raw_bars {
         let duration = UNIX_EPOCH + Duration::from_secs(raw_bar.timestamp);
         let time = DateTime::<Local>::from(duration);
 
-        bars.push(Bar {
+        all_bars.push(Bar {
             time: time,
             timestamp: raw_bar.timestamp,
             open: raw_bar.open,
@@ -97,6 +98,19 @@ fn load_chart(path : &str) -> Chart {
             volume: raw_bar.volume,
         })
     };
+
+    // Start bars at the start of a day and end it at the
+    // end of a day so we can assume we only have complete
+    // days when running backtests.
+    let initial_date : Date<Local> = all_bars[0].time.date();
+    let last_date : Date<Local> = all_bars[all_bars.len() - 1].time.date();
+    let mut bars : Vec<Bar> = Vec::new();
+    for bar in all_bars {
+        let current_date = bar.time.date();
+        if current_date != initial_date && current_date != last_date {
+            bars.push(bar)
+        }
+    }
 
     let mut current_date = bars[0].time.date();
     let mut days : Vec<Day> = Vec::new();
