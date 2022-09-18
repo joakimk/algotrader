@@ -4,6 +4,7 @@ use regex::Regex;
 use chrono::prelude::*;
 use chrono::Local;
 use std::time::{UNIX_EPOCH, Duration};
+use cli_candlestick_chart::{Candle, Chart as DrawChart};
 
 #[derive(Debug, Deserialize)]
 pub struct RawBar {
@@ -63,6 +64,7 @@ fn main() {
     let chart = load_chart("data/15/AZA.json");
 
     // next:
+    // - cleanup chart loading code, put that into a separate file
     // - separate into days and run them in parallel
     // - figure out how simulated trading would work
     // - run more than one stock at the same time
@@ -71,6 +73,32 @@ fn main() {
     dbg!(&chart.bars[10293]);
     dbg!(&chart.days[0]);
     dbg!(&chart.days[304]);
+
+    draw_chart(chart)
+}
+
+fn draw_chart(chart : Chart) {
+    let mut candles : Vec<Candle> = Vec::new();
+
+    // This could also draw entry and exit as special bars?
+	for bar in chart.bars {
+        candles.push(Candle {
+           open: bar.open.into(),
+           high: bar.high.into(),
+           low: bar.low.into(),
+           close: bar.close.into(),
+           volume: Some(bar.volume as f64),
+           timestamp: Some(bar.timestamp as i64)
+        })
+    }
+
+    // Create and display the chart
+    let mut draw_chart = DrawChart::new(&candles);
+
+    // Set the chart title
+    draw_chart.set_name(chart.symbol);
+
+    draw_chart.draw();
 }
 
 fn load_chart(path : &str) -> Chart {
