@@ -64,6 +64,7 @@ fn main() {
     let chart = load_chart("data/15/AZA.json");
 
     // next:
+    // - add high/low to day, verify it's all correct
     // - cleanup chart loading code, put that into a separate file
     // - separate into days and run them in parallel
     // - figure out how simulated trading would work
