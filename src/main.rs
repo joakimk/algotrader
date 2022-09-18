@@ -30,13 +30,13 @@ pub struct Bar {
 #[derive(Debug)]
 pub struct Day {
     pub date : Date<Local>,
-    //pub open_time : DateTime<Local>,
-    //pub close_time : DateTime<Local>,
+    pub open_time : DateTime<Local>,
+    pub close_time : DateTime<Local>,
 
-    //pub open : f32,
+    pub open : f32,
     //pub high : f32,
     //pub low : f32,
-    //pub close : f32,
+    pub close : f32,
     //pub volume : u64,
 }
 
@@ -74,7 +74,7 @@ fn main() {
     dbg!(&chart.days[0]);
     dbg!(&chart.days[304]);
 
-    draw_chart(chart)
+    //draw_chart(chart)
 }
 
 fn draw_chart(chart : Chart) {
@@ -82,7 +82,7 @@ fn draw_chart(chart : Chart) {
 
     // This could also draw entry and exit as special bars?
 
-    let mut current_date = chart.bars[0].time.date();
+    //let mut current_date = chart.bars[0].time.date();
 	for bar in chart.bars {
         // And day changes. This implementation is kind of a hack.
         // Maybe it would be easy to add support to the library for this.
@@ -164,17 +164,35 @@ fn load_chart(path : &str) -> Chart {
     let mut current_date = bars[0].time.date();
     let mut days : Vec<Day> = Vec::new();
     let last_bar = &bars[bars.len() - 1];
+    let mut day_open_bar = &bars[0];
+    let mut previous_bar = &bars[0];
 
     for bar in &bars {
         let bar_date = bar.time.date();
 
-        if bar_date > current_date || bar.time == last_bar.time {
+        let last_bar_in_data_set = (bar.time == last_bar.time);
+
+        if bar_date > current_date || last_bar_in_data_set {
+            let day_close_bar =
+                if last_bar_in_data_set {
+                    bar
+                } else {
+                    previous_bar
+                };
+
             days.push(Day {
-                date: current_date
+                date: current_date,
+                open_time: day_open_bar.time,
+                close_time: day_close_bar.time,
+                open: day_open_bar.open,
+                close: day_close_bar.close,
             });
 
+            day_open_bar = &bar;
             current_date = bar.time.date();
         }
+
+        previous_bar = &bar;
     }
 
     Chart {
