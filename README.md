@@ -4,7 +4,7 @@ WIP: Work in progress. Nothing usable yet.
 
 ## Intro
 
-Open source algorithmic trader for developers written in Rust. The idea is that you have to implement strategies in Rust (to enable quick backtests) and also your own HTTP API (in any language) to your specific broker.
+Open source algorithmic trader for developers written in Rust. The idea is that you build strategies in Rust (to enable quick backtests) and also setup your own HTTP API (in any language) to your specific broker.
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
 
@@ -51,7 +51,7 @@ Core concepts and design ideas:
   - [ ] Exposure time by strategy
     - [ ] Adjusted result given it would be exposed 100% of the time.
 
-# Goal1: Pre-alpha (backtest, two strategies, hardcoded config)
+# Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
 
 - [x] TradingView import for stock data.
 - [ ] Two different stategies (probably one for ranging and one for trending markets).
