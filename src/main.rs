@@ -69,6 +69,8 @@ fn main() {
 
     dbg!(&chart.bars[0]);
     dbg!(&chart.bars[10293]);
+    dbg!(&chart.days[0]);
+    dbg!(&chart.days[304]);
 }
 
 fn load_chart(path : &str) -> Chart {
@@ -106,27 +108,21 @@ fn load_chart(path : &str) -> Chart {
     let last_date : Date<Local> = all_bars[all_bars.len() - 1].time.date();
     let mut bars : Vec<Bar> = Vec::new();
     for bar in all_bars {
-        let current_date = bar.time.date();
-        if current_date != initial_date && current_date != last_date {
+        let bar_date = bar.time.date();
+        if bar_date != initial_date && bar_date != last_date {
             bars.push(bar)
         }
     }
 
+    // Build days
     let mut current_date = bars[0].time.date();
     let mut days : Vec<Day> = Vec::new();
+    let last_bar = &bars[bars.len() - 1];
 
-    // TODO: This does not include a day for the last day since there
-    //       will never be a bar day newer than the current date.
-    //
-    //       I think I want it to add a day once it reaches the end
-    //       of the current day in order to be able to collect
-    //       open/close, etc.
-    //
-    //       But maybe just a group would work better?
     for bar in &bars {
         let bar_date = bar.time.date();
 
-        if bar_date > current_date {
+        if bar_date > current_date || bar.time == last_bar.time {
             days.push(Day {
                 date: current_date
             });
