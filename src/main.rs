@@ -34,8 +34,8 @@ pub struct Day {
     pub close_time : DateTime<Local>,
 
     pub open : f32,
-    //pub high : f32,
-    //pub low : f32,
+    pub high : f32,
+    pub low : f32,
     pub close : f32,
     //pub volume : u64,
 }
@@ -64,7 +64,7 @@ fn main() {
     let chart = load_chart("data/15/AZA.json");
 
     // next:
-    // - add high/low to day, verify it's all correct
+    // - see if chart loading can be tested
     // - cleanup chart loading code, put that into a separate file
     // - separate into days and run them in parallel
     // - figure out how simulated trading would work
@@ -167,11 +167,21 @@ fn load_chart(path : &str) -> Chart {
     let last_bar = &bars[bars.len() - 1];
     let mut day_open_bar = &bars[0];
     let mut previous_bar = &bars[0];
+    let mut highest_high_today : f32 = bars[0].high;
+    let mut lowest_low_today : f32 = bars[0].low;
 
     for bar in &bars {
         let bar_date = bar.time.date();
 
-        let last_bar_in_data_set = (bar.time == last_bar.time);
+        let last_bar_in_data_set = bar.time == last_bar.time;
+
+        if bar.high > highest_high_today {
+            highest_high_today = bar.high;
+        }
+
+        if bar.low < lowest_low_today {
+            lowest_low_today = bar.low;
+        }
 
         if bar_date > current_date || last_bar_in_data_set {
             let day_close_bar =
@@ -186,11 +196,15 @@ fn load_chart(path : &str) -> Chart {
                 open_time: day_open_bar.time,
                 close_time: day_close_bar.time,
                 open: day_open_bar.open,
+                high: highest_high_today,
+                low: lowest_low_today,
                 close: day_close_bar.close,
             });
 
             day_open_bar = &bar;
             current_date = bar.time.date();
+            highest_high_today = bar.high;
+            lowest_low_today = bar.low;
         }
 
         previous_bar = &bar;
