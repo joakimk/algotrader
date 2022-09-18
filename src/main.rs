@@ -81,7 +81,25 @@ fn draw_chart(chart : Chart) {
     let mut candles : Vec<Candle> = Vec::new();
 
     // This could also draw entry and exit as special bars?
+
+    // And day changes. This implementation is kind of a hack.
+    // Maybe it would be easy to add support to the library for this.
+    let mut current_date = chart.bars[0].time.date();
 	for bar in chart.bars {
+        let bar_date = bar.time.date();
+        if bar_date != current_date {
+            current_date = bar_date;
+
+            candles.push(Candle {
+                open: (bar.open * 1.05) as f64,
+                close: (bar.close * 0.95) as f64,
+                high: (bar.open * 1.05) as f64,
+                low: (bar.close * 0.95) as f64,
+                volume: Some(0.0),
+                timestamp: Some(bar.timestamp as i64)
+            })
+        }
+
         candles.push(Candle {
            open: bar.open.into(),
            high: bar.high.into(),
