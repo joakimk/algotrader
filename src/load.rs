@@ -104,7 +104,7 @@ pub fn load_chart(path : &str) -> Chart {
 }
 
 #[cfg(test)]
-mod load_tests {
+mod load_chart {
     use super::*;
 
     #[test]
@@ -113,5 +113,30 @@ mod load_tests {
         // data and for examples in a public repo. WIP.
         let chart = load_chart("data/15/AZA.json");
         assert_eq!(chart.bars.len(), 10294)
+    }
+
+    #[test]
+    fn test_days_are_calculated_correctly() {
+        let chart = load_chart("data/15/AZA.json");
+        let first_bar = &chart.bars[0];
+        let last_bar = &chart.bars[chart.bars.len() - 1];
+        let last_bar_of_first_day = &chart.bars[33];
+        let first_day = &chart.days[0];
+        let last_day = &chart.days[chart.days.len() - 1];
+
+        assert_eq!(first_day.date, first_bar.time.date());
+
+        assert_eq!(first_day.open_time, first_bar.time);
+        assert_eq!(first_day.open_time, first_bar.time);
+        assert_eq!(first_day.close_time, last_bar_of_first_day.time);
+
+        assert_eq!(first_day.open, first_bar.open);
+        assert_eq!(first_day.high, 274.3);
+        assert_eq!(first_day.low, 266.9);
+        assert_eq!(first_day.close, last_bar_of_first_day.close);
+
+        assert_eq!(last_day.close_time, last_bar.time);
+
+        // wip
     }
 }
