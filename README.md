@@ -83,6 +83,12 @@ Run backtests and show results.
 make
 ```
 
+Run tests
+
+```
+make test
+```
+
 ## Contributions
 
 Contributions are very welcome, but be aware I don't always have a lot of spare time for this project so it could take some time before I can review it. The more well made, consistent with the style of the existing project, and well tested it is the easier it is to include it.
