@@ -37,9 +37,9 @@ list.each do |f|
   symbol = m[1]
   timeframe = m[2]
 
-  system("mkdir -p data/1 data/5 data/15")
+  system("mkdir -p data/local/1 data/local/5 data/local/15")
 
-  output_path = "data/#{timeframe}/#{symbol}.json"
+  output_path = "data/local/#{timeframe}/#{symbol}.json"
   puts "Writing #{output_path}"
   File.write(output_path, bars.to_json)
 end

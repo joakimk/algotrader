@@ -1,16 +1,10 @@
 use std::fs;
-use regex::Regex;
 use chrono::prelude::*;
 use std::time::{UNIX_EPOCH, Duration};
 
 use crate::types::*;
 
-pub fn load_chart(path : &str) -> Chart {
-    let re = Regex::new(r"data/(.+)/(.+)\.json").unwrap();
-    let cap = re.captures(path).unwrap();
-    let timeframe = &cap[1];
-    let symbol = &cap[2];
-
+pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
     let data = fs::read_to_string(path)
         .expect("Unable to read file at {path}.");
 
@@ -60,14 +54,6 @@ pub fn load_chart(path : &str) -> Chart {
 
         let last_bar_in_data_set = bar.time == last_bar.time;
 
-        if bar.high > highest_high_today {
-            highest_high_today = bar.high;
-        }
-
-        if bar.low < lowest_low_today {
-            lowest_low_today = bar.low;
-        }
-
         if bar_date > current_date || last_bar_in_data_set {
             let day_close_bar =
                 if last_bar_in_data_set {
@@ -92,12 +78,20 @@ pub fn load_chart(path : &str) -> Chart {
             lowest_low_today = bar.low;
         }
 
+        if bar.high > highest_high_today {
+            highest_high_today = bar.high;
+        }
+
+        if bar.low < lowest_low_today {
+            lowest_low_today = bar.low;
+        }
+
         previous_bar = &bar;
     }
 
     Chart {
         symbol: symbol.to_string(),
-        timeframe: timeframe.parse::<i32>().unwrap(),
+        timeframe: timeframe,
         bars: bars,
         days: days
     }
@@ -108,35 +102,34 @@ mod load_chart {
     use super::*;
 
     #[test]
-    fn test_loading() {
-        // I have a support ticket at tradingview asking if I can use some of their data as fixture
-        // data and for examples in a public repo. WIP.
-        let chart = load_chart("data/15/AZA.json");
-        assert_eq!(chart.bars.len(), 10294)
-    }
-
-    #[test]
     fn test_days_are_calculated_correctly() {
-        let chart = load_chart("data/15/AZA.json");
+        let chart = load_about_a_month_of_stock_data();
+        assert_eq!(chart.bars.len(), 816);
+
         let first_bar = &chart.bars[0];
         let last_bar = &chart.bars[chart.bars.len() - 1];
         let last_bar_of_first_day = &chart.bars[33];
         let first_day = &chart.days[0];
         let last_day = &chart.days[chart.days.len() - 1];
 
-        assert_eq!(first_day.date, first_bar.time.date());
+        // Starts on the second day and ends on the next to last to ensure complete days
+        assert_eq!(first_bar.time, Local.ymd(2022, 8, 12).and_hms(9, 0, 0));
+        assert_eq!(last_bar.time, Local.ymd(2022, 9, 14).and_hms(17, 15, 0));
 
+        assert_eq!(first_day.date, first_bar.time.date());
         assert_eq!(first_day.open_time, first_bar.time);
         assert_eq!(first_day.open_time, first_bar.time);
         assert_eq!(first_day.close_time, last_bar_of_first_day.time);
 
         assert_eq!(first_day.open, first_bar.open);
-        assert_eq!(first_day.high, 274.3);
-        assert_eq!(first_day.low, 266.9);
+        assert_eq!(first_day.high, 198.0);
+        assert_eq!(first_day.low, 193.9);
         assert_eq!(first_day.close, last_bar_of_first_day.close);
 
         assert_eq!(last_day.close_time, last_bar.time);
+    }
 
-        // wip
+    fn load_about_a_month_of_stock_data() -> Chart {
+        load_chart("AZA", 15, "data/test/OMXSTO-AZA-2022-08-11-2022-09-15.json")
     }
 }

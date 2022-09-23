@@ -3,7 +3,7 @@ mod draw;
 mod types;
 
 fn main() {
-    let chart = load::load_chart("data/15/AZA.json");
+    let chart = load::load_chart("AZA", 15, "data/local/15/AZA.json");
 
     // next:
     // - see if chart loading can be tested

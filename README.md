@@ -67,7 +67,9 @@ Core concepts and design ideas:
 
 ## Development
 
-There are very few free data sources that are good so I can't include any data in this repo. I'm developing this using exported CSV data from a paid [TradingView](https://www.tradingview.com/) account. You can use data from any source that provides timestamp/open/close/high/low and volume.
+Test data in this project is from [TradingView](https://www.tradingview.com/) but you could use any data that provides timestamp/open/close/high/low and volume.
+
+If you want to export data from TradingView you will need to have a paid account. I have confirmed with TradingView support that it is okay to include data from their exports in a public project like this.
 
 Import data.
 
