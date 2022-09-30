@@ -12,7 +12,7 @@ pub struct RawBar {
     pub volume: u64,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone)]
 pub struct Bar {
     pub time: DateTime<Local>,
     pub timestamp: u64,
@@ -43,6 +43,12 @@ pub struct Chart {
     pub bars : Vec<Bar>,
     pub days : Vec<Day>,
 }
+
+#[derive(Debug)]
+pub struct DayResult {
+    pub percent : f32,
+}
+
 
 // This is the data strategies will have to make decisions
 // based on single charts or correlations.

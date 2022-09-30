@@ -2,6 +2,7 @@ use cli_candlestick_chart::{Candle, Chart as DrawChart};
 
 use crate::types::*;
 
+#[allow(dead_code)]
 pub fn draw_chart(chart : Chart) {
     let mut candles : Vec<Candle> = Vec::new();
 

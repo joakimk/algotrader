@@ -1,6 +1,6 @@
 #all: import
-#all: run
-all: test
+all: run
+#all: test
 
 .PHONY: run test import
 
