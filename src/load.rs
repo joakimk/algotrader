@@ -11,12 +11,25 @@ pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
     let raw_bars: Vec<RawBar> = serde_json::from_str(&data)
         .expect("JSON in {path} does not have correct format.");
 
-    let mut all_bars : Vec<Bar> = Vec::new();
+    let bars = remove_bars_to_ensure_complete_days(load_bars(raw_bars));
+    let days = build_days(&bars);
+
+    Chart {
+        symbol: symbol.to_string(),
+        timeframe: timeframe,
+        bars: bars,
+        days: days
+    }
+}
+
+fn load_bars(raw_bars : Vec<RawBar>) -> Vec<Bar> {
+    let mut bars : Vec<Bar> = Vec::new();
+
     for raw_bar in raw_bars {
         let duration = UNIX_EPOCH + Duration::from_secs(raw_bar.timestamp);
         let time = DateTime::<Local>::from(duration);
 
-        all_bars.push(Bar {
+        bars.push(Bar {
             time: time,
             timestamp: raw_bar.timestamp,
             open: raw_bar.open,
@@ -27,9 +40,13 @@ pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
         })
     };
 
-    // Start bars at the start of a day and end it at the
-    // end of a day so we can assume we only have complete
-    // days when running backtests.
+    bars
+}
+
+// Start bars at the start of a day and end it at the
+// end of a day so we can assume we only have complete
+// days when running backtests.
+fn remove_bars_to_ensure_complete_days(all_bars : Vec<Bar>) -> Vec<Bar> {
     let initial_date : Date<Local> = all_bars[0].time.date();
     let last_date : Date<Local> = all_bars[all_bars.len() - 1].time.date();
     let mut bars : Vec<Bar> = Vec::new();
@@ -40,7 +57,10 @@ pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
         }
     }
 
-    // Build days
+    bars
+}
+
+fn build_days(bars : &Vec<Bar>) -> Vec<Day> {
     let mut current_date = bars[0].time.date();
     let mut days : Vec<Day> = Vec::new();
     let last_bar = &bars[bars.len() - 1];
@@ -49,7 +69,7 @@ pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
     let mut highest_high_today : f32 = bars[0].high;
     let mut lowest_low_today : f32 = bars[0].low;
 
-    for bar in &bars {
+    for bar in bars {
         let bar_date = bar.time.date();
 
         let last_bar_in_data_set = bar.time == last_bar.time;
@@ -89,12 +109,7 @@ pub fn load_chart(symbol : &str, timeframe : i32, path : &str) -> Chart {
         previous_bar = &bar;
     }
 
-    Chart {
-        symbol: symbol.to_string(),
-        timeframe: timeframe,
-        bars: bars,
-        days: days
-    }
+    days
 }
 
 #[cfg(test)]
