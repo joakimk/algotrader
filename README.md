@@ -56,8 +56,8 @@ Core concepts and design ideas:
 - [x] TradingView import for stock data.
 - [ ] Two different stategies (probably one for ranging and one for trending markets).
 - [ ] Be able to run on 5 stocks that are as unrelated as possible.
-  - [ ] Be able to run one stock without considering days.
-  - [ ] Separating into days and running days in parallel.
+  - [x] Be able to run one stock without considering days.
+  - [x] Separating into days and running days in parallel.
   - [ ] Run more than one stock at the same time.
   - [ ] Apply strategies and print where it would buy.
   - [ ] Save active position in memory, sell it at end of day if needed.
