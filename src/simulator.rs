@@ -7,7 +7,10 @@ pub fn simulate_day(chart: &Chart, day: &Day) -> DayResult {
     });
 
     DayResult {
-        percent: 10f32,
+        timestamp: day.open_time.timestamp() as u64,
+        close_percent: 1f32,
+        low_percent: -0.5f32,
+        high_percent: 1.2f32
     }
 }
 

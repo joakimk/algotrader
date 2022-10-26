@@ -53,17 +53,34 @@ Core concepts and design ideas:
 
 # Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
 
+Step 1
+
 - [x] TradingView import for stock data.
-- [ ] Two different stategies (probably one for ranging and one for trending markets).
-- [ ] Be able to run on 5 stocks that are as unrelated as possible.
+- [ ] Be able to run on 1 stock
   - [x] Be able to run one stock without considering days.
   - [x] Separating into days and running days in parallel.
-  - [ ] Run more than one stock at the same time.
+  - [ ] One simple strategy
   - [ ] Apply strategies and print where it would buy.
   - [ ] Save active position in memory, sell it at end of day if needed.
   - [ ] Collect results and display them.
   - [ ] Manually verify that the trades it took makes sense in reality.
-- [ ] Bonus: Full system testing setup (once I have explored what data the system will return, etc.)
+  - [ ] Implement buy and sell APIs to let it run for real (with tiny sums of money).
+    - The idea here is to fix the most common error states as they occur over time.
+
+Step 2
+
+- [ ] Two different stategies (probably one for ranging and one for trending markets).
+- [ ] Be able to run on 5 stocks that are as unrelated as possible.
+  - [ ] Run more than one stock at the same time.
+
+Bonus
+
+- Full system testing setup (once I have explored what data the system will return, etc.)
+
+# Goal 2: Use the data to implement proper backtesting tools and initial strategies
+
+- [ ] More backtesting tools, fuzzing, optimization, etc.
+- [ ] Implement and verify different strategies.
 
 ## Development
 

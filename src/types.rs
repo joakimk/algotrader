@@ -46,7 +46,16 @@ pub struct Chart {
 
 #[derive(Debug)]
 pub struct DayResult {
-    pub percent : f32,
+    // The change we arrived at once all positions where sold.
+    pub close_percent : f32,
+
+    // Shows if there was potential for better exits.
+    pub high_percent : f32,
+
+    // How much we risked during the day.
+    pub low_percent : f32,
+
+    pub timestamp : u64,
 }
 
 
