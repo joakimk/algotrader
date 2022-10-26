@@ -56,6 +56,15 @@ pub struct DayResult {
     pub low_percent : f32,
 
     pub timestamp : u64,
+
+    pub trades : Vec<Trade>
+}
+
+#[derive(Debug)]
+pub struct Trade {
+    pub symbol : String,
+    pub buy_time : DateTime<Local>,
+    pub sell_time : Option<DateTime<Local>>,
 }
 
 
