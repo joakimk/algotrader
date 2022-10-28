@@ -4,9 +4,10 @@ use crate::types::*;
 
 #[allow(dead_code)]
 pub fn draw_day_results(results : &Vec<DayResult>) {
+    let todo_this_duplicates_settings = 1;
     let minimal_position_amount = 10f32;
     let position_amount = minimal_position_amount;
-    let account_starting_amount = 50f32;
+    let account_starting_amount = 1000f32;
     let mut account_amount = account_starting_amount;
 
     let mut candles : Vec<Candle> = Vec::new();

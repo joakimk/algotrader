@@ -63,10 +63,23 @@ pub struct DayResult {
 #[derive(Debug)]
 pub struct Trade {
     pub symbol : String,
+
     pub buy_time : DateTime<Local>,
-    pub sell_time : Option<DateTime<Local>>,
+    pub buy_price : f32,
+    pub buy_count : u32,
+
+    pub sell_price : f32,
+    pub sell_time : DateTime<Local>,
+
+    // Mainly for visualizing what it's doing.
+    pub rounded_position_amount : u32,
+    pub rounded_position_unused_amount : u32,
 }
 
+#[derive(Debug)]
+pub struct Settings {
+    pub position_size : f32,
+}
 
 // This is the data strategies will have to make decisions
 // based on single charts or correlations.
