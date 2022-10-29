@@ -1,5 +1,7 @@
 use crate::types::*;
 use crate::strategies::*;
+use crate::load::*;
+use chrono::prelude::*;
 
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult {
     let mut trades = Vec::new();
@@ -43,10 +45,11 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
         fee_amount += trade.fee_amount;
     }
 
-    let close_percent = ((account_amount / starting_account_amount) - 1.0) * 100.0;
+    let close_percent = ((account_amount / starting_account_amount) - 1.0) * 10.0;
 
     DayResult {
         timestamp: day.open_time.timestamp() as u64,
+        time: day.open_time,
         close_percent: close_percent,
         low_percent: close_percent,
         high_percent: close_percent,
@@ -66,4 +69,36 @@ fn bars_today(chart: &Chart, day: &Day) -> Vec<Bar> {
     }
 
     bars
+}
+
+#[cfg(test)]
+mod simulate_day {
+    use super::*;
+
+    #[test]
+    fn test_returns_the_expected_result() {
+        let settings = Settings {
+            position_size: 1000.0,
+            fee_per_transaction: 1.0,
+        };
+
+        let chart = load_about_a_month_of_stock_data();
+        let day = &chart.days[3];
+
+        let day_result = simulate_day(&settings, &chart, &day);
+
+        dbg!(&day_result);
+
+        assert_eq!(day_result.time, Local.ymd(2022, 8, 17).and_hms(9, 0, 0));
+        assert_eq!(day_result.fee_amount, 2.0);
+
+        // The diff between buy and sell is 3.35%, but we do not use
+        // the entire amount so in total the account change is 3.22%.
+        // ruby: (1 - (((198.5 * 5) * (192.05/198.5) + (1000 - (198.5 * 5))) / 1000.0)).round(5) * 100
+        assert_eq!(day_result.close_percent, -(3.225));
+    }
+
+    fn load_about_a_month_of_stock_data() -> Chart {
+        load_chart("AZA", 15, "data/test/OMXSTO-AZA-2022-08-11-2022-09-15.json")
+    }
 }

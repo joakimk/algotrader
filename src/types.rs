@@ -56,6 +56,7 @@ pub struct DayResult {
     pub low_percent : f32,
 
     pub timestamp : u64,
+    pub time : DateTime<Local>,
 
     pub trades : Vec<Trade>,
 
