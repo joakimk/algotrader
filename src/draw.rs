@@ -31,6 +31,7 @@ pub fn draw_day_results(results : &Vec<DayResult>) {
         });
 
         account_amount = close_account_amount;
+        account_amount -= r.fee_amount;
     }
 
     // If the time period is long, combine into weeks or months?

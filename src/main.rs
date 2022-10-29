@@ -11,7 +11,8 @@ fn main() {
     let chart = load::load_chart("AZA", 15, "data/local/15/AZA.json");
 
     let settings = Settings {
-        position_size: 1000.0
+        position_size: 1000.0,
+        fee_per_transaction: 0f32, // the broker I intend to use for initial testing has zero fees for stocks
     };
 
     let results : Vec<DayResult> = chart.days.par_iter()

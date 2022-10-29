@@ -26,18 +26,21 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
                 rounded_position_amount: ((buy_count as f32) * buy_price) as u32,
                 rounded_position_unused_amount: (settings.position_size - buy_total) as u32,
                 sell_price: sell_price,
+                fee_amount: settings.fee_per_transaction * 2.0,
             });
         }
     });
 
     let starting_account_amount = 100f32;
     let mut account_amount = starting_account_amount;
+    let mut fee_amount = 0f32;
 
     for trade in trades.iter() {
         let diff = trade.sell_price / trade.buy_price;
         let position_amount = (trade.buy_count as f32) * trade.buy_price;
         let unused_amount = account_amount - position_amount;
         account_amount = unused_amount + position_amount * diff;
+        fee_amount += trade.fee_amount;
     }
 
     let close_percent = ((account_amount / starting_account_amount) - 1.0) * 100.0;
@@ -47,6 +50,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
         close_percent: close_percent,
         low_percent: close_percent,
         high_percent: close_percent,
+        fee_amount: fee_amount,
         trades: trades,
     }
 }

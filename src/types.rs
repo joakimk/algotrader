@@ -57,7 +57,9 @@ pub struct DayResult {
 
     pub timestamp : u64,
 
-    pub trades : Vec<Trade>
+    pub trades : Vec<Trade>,
+
+    pub fee_amount : f32
 }
 
 #[derive(Debug)]
@@ -74,11 +76,14 @@ pub struct Trade {
     // Mainly for visualizing what it's doing.
     pub rounded_position_amount : u32,
     pub rounded_position_unused_amount : u32,
+
+    pub fee_amount : f32,
 }
 
 #[derive(Debug)]
 pub struct Settings {
     pub position_size : f32,
+    pub fee_per_transaction : f32,
 }
 
 // This is the data strategies will have to make decisions
