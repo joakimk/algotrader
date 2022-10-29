@@ -10,7 +10,7 @@ run:
 	@target/release/algotrader
 
 test:
-	@cargo test
+	@cargo test -- --nocapture
 
 import:
 	@script/import_tradingview_csv
