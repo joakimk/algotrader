@@ -21,10 +21,10 @@ fn main() {
 
     draw::draw_day_results(&results);
 
-    dbg!(chart.days.len());
-    dbg!(&chart.days[0].date);
-    dbg!(&chart.days[304].date);
-    dbg!(&results[0]);
+    //dbg!(chart.days.len());
+    //dbg!(&chart.days[0].date);
+    //dbg!(&chart.days[304].date);
+    //dbg!(&results[0]);
 
     //draw::draw_chart(chart)
 }
