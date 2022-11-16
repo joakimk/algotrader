@@ -2,6 +2,8 @@
 
 WIP: Work in progress.
 
+What works so far:
+
 - Running `make` shows simulation results.
 - Running `make test` runs tests.
 
