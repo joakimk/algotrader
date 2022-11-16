@@ -19,12 +19,16 @@ Step 1
 - [ ] Be able to run on 1 stock.
   - [x] Be able to run one stock without considering days.
   - [x] Separating into days and running days in parallel.
-  - [ ] One simple strategy.
-  - [ ] Apply strategies and print where it would buy.
-  - [ ] Save active position in memory, sell it at end of day if needed.
-  - [ ] Collect results and display them.
-  - [ ] Manually verify that the trades it took makes sense in reality.
-  - [ ] Implement manual buy and sell notifications as default fallback API.
+  - [ ] Simulator (src/simulator.rs)
+    - [ ] One simple strategy.
+    - [ ] Apply strategies and print where it would buy.
+    - [ ] Save active position in memory, sell it at end of day if needed.
+    - [ ] Collect results and display them.
+    - [ ] Manually verify that the trades it took makes sense in reality.
+  - [ ] Run with live data
+    - [ ] Live data API
+    - [ ] Run with live data.
+    - [ ] Manual buy and sell notifications as default fallback API.
 
 Step 2
 
