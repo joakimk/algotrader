@@ -7,6 +7,8 @@ What works so far:
 - Running `make` shows simulation results.
 - Running `make test` runs tests.
 
+![](example.png)
+
 ## Intro
 
 Open source algorithmic trader for developers written in Rust. The idea is that you build strategies in Rust (to enable quick backtests) and also implement your own HTTP API (in any language) to your specific broker.
