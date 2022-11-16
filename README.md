@@ -8,9 +8,41 @@ Open source algorithmic trader for developers written in Rust. The idea is that 
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
 
-## Readme driven development
+# Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
 
-Core concepts and design ideas:
+Step 1
+
+- [x] TradingView import for stock data.
+- [ ] Be able to run on 1 stock.
+  - [x] Be able to run one stock without considering days.
+  - [x] Separating into days and running days in parallel.
+  - [ ] One simple strategy.
+  - [ ] Apply strategies and print where it would buy.
+  - [ ] Save active position in memory, sell it at end of day if needed.
+  - [ ] Collect results and display them.
+  - [ ] Manually verify that the trades it took makes sense in reality.
+  - [ ] Implement manual buy and sell notifications as default fallback API.
+
+Step 2
+
+- [ ] Implement buy and sell APIs to let it run for real (with tiny sums of money).
+  - The idea here is to fix the most common error states as they occur over time.
+
+Step 3
+
+- [ ] Be able to run on multiple stocks
+- [ ] Two different stategies (probably one for ranging and one for trending markets).
+
+Bonus
+
+- Full system testing setup (once I have explored what data the system will return, etc.)
+
+# Goal 2: Use the data to implement proper backtesting tools and initial strategies
+
+- [ ] More backtesting tools, fuzzing, optimization, etc.
+- [ ] Implement and verify different strategies.
+
+## Core concepts and design ideas
 
 - [ ] Loss is always a possible outcome.
   - Never trade anything you can't loose. Even if everything works correctly, perhaps a technical issue somewhere causes orders not to go through properly, or something happens where the market gaps up or down unexpectedly during the day. This is why you want to risk a fixed amount and not the entire account.
@@ -50,37 +82,6 @@ Core concepts and design ideas:
   - [ ] Maximum drawdown
   - [ ] Exposure time by strategy
     - [ ] Adjusted result given it would be exposed 100% of the time.
-
-# Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
-
-Step 1
-
-- [x] TradingView import for stock data.
-- [ ] Be able to run on 1 stock
-  - [x] Be able to run one stock without considering days.
-  - [x] Separating into days and running days in parallel.
-  - [ ] One simple strategy
-  - [ ] Apply strategies and print where it would buy.
-  - [ ] Save active position in memory, sell it at end of day if needed.
-  - [ ] Collect results and display them.
-  - [ ] Manually verify that the trades it took makes sense in reality.
-  - [ ] Implement buy and sell APIs to let it run for real (with tiny sums of money).
-    - The idea here is to fix the most common error states as they occur over time.
-
-Step 2
-
-- [ ] Two different stategies (probably one for ranging and one for trending markets).
-- [ ] Be able to run on 5 stocks that are as unrelated as possible.
-  - [ ] Run more than one stock at the same time.
-
-Bonus
-
-- Full system testing setup (once I have explored what data the system will return, etc.)
-
-# Goal 2: Use the data to implement proper backtesting tools and initial strategies
-
-- [ ] More backtesting tools, fuzzing, optimization, etc.
-- [ ] Implement and verify different strategies.
 
 ## Development
 

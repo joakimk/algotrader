@@ -1,6 +1,6 @@
 use crate::types::*;
 
-// The idea with this strategy is to look for days that significantly gapped up when the market opens compared to where it closed the day before.
+// The idea with this strategy is to look for days that significantly gapped up when the market opens (or within 15-30 minutes of market open) compared to where it closed the day before.
 //
 // Then wait for it to retrace back to the general area of yesterdays close and go long (buy) risking very little (just below yesterdays close).
 //
