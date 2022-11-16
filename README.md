@@ -1,6 +1,9 @@
 # algotrader
 
-WIP: Work in progress. Nothing usable yet.
+WIP: Work in progress.
+
+- Running `make` shows simulation results.
+- Running `make test` runs tests.
 
 ## Intro
 
