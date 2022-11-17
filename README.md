@@ -9,6 +9,8 @@ What works so far:
 
 ![](example.png)
 
+You can support the development of this tool by using [my referal link to ig.com](https://refer.ig.com/joakimk-16).
+
 ## Intro
 
 Open source algorithmic trader for developers written in Rust. The idea is that you build strategies in Rust (to enable quick backtests) and also implement your own HTTP API (in any language) to your specific broker.
