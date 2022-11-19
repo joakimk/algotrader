@@ -128,6 +128,10 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 
 - The simplest possible API would be one that provides market data during the day and then notifies you to buy or sell when needed. You probably want to run such an integration on the hourly timeframe to not get too many notifications.
 
+## Unfinished broker integrations
+
+- [Nordnet](https://github.com/joakimk/algotrader-nordnet)
+
 ## Related resources
 
 - https://www.youtube.com/c/CriticalTrading
