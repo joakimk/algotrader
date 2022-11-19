@@ -9,7 +9,7 @@ What works so far:
 
 ![](example.png)
 
-You can support the development of this tool (give me more time to work on it) by using [my referal link to ig.com](https://refer.ig.com/joakimk-16) or send bitcoin to `1TqbToWRV41o8879d8zNectrVHz5H97zV` :)
+You can support the development of this tool (give me more time to work on it) by using [my referal link to ig.com](https://refer.ig.com/joakimk-16) or send bitcoin to `1TqbToWRV41o8879d8zNectrVHz5H97zV`.
 
 ## Intro
 

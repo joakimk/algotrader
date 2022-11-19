@@ -13,25 +13,22 @@ pub fn draw_day_results(results : &Vec<DayResult>) {
     let mut candles : Vec<Candle> = Vec::new();
 
     for r in results {
-        let close_account_amount = account_amount + (position_amount * (1.0 + (r.close_percent / 100.0))) - position_amount;
+        // todo: is this corrrect, position_amount or full amount?
+        let account_amount_after_this_day = account_amount + (position_amount * (1.0 + (r.percent / 100.0))) - position_amount - r.fee_amount;
         assert!(account_amount >= minimal_position_amount);
-
-        let high_account_amount = account_amount + (position_amount * (1.0 + (r.high_percent / 100.0))) - position_amount;
-        let low_account_amount = account_amount + (position_amount * (1.0 + (r.low_percent / 100.0))) - position_amount;
 
         // candle
 
         candles.push(Candle {
            open: account_amount.into(),
-           high: high_account_amount.into(),
-           low: low_account_amount.into(),
-           close: close_account_amount.into(),
+           high: account_amount.into(),
+           low: account_amount.into(),
+           close: account_amount_after_this_day.into(),
            volume: None,
            timestamp: Some(r.timestamp as i64)
         });
 
-        account_amount = close_account_amount;
-        account_amount -= r.fee_amount;
+        account_amount = account_amount_after_this_day;
     }
 
     // If the time period is long, combine into weeks or months?

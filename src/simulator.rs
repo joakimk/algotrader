@@ -45,14 +45,12 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
         fee_amount += trade.fee_amount;
     }
 
-    let close_percent = ((account_amount / starting_account_amount) - 1.0) * 10.0;
+    let percent = ((account_amount / starting_account_amount) - 1.0) * 10.0;
 
     DayResult {
         timestamp: day.open_time.timestamp() as u64,
         time: day.open_time,
-        close_percent: close_percent,
-        low_percent: close_percent,
-        high_percent: close_percent,
+        percent: percent,
         fee_amount: fee_amount,
         trades: trades,
     }
