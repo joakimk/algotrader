@@ -4,7 +4,7 @@ WIP: Work in progress.
 
 What works so far:
 
-- Running `make` shows simulation results.
+- Running `make` shows backtest results.
 - Running `make test` runs tests.
 
 ![](example.png)
