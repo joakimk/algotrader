@@ -17,7 +17,7 @@ Open source algorithmic trader written in [Rust](https://www.rust-lang.org/) to 
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
 
-# Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
+## Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
 
 Step 1
 
@@ -50,7 +50,7 @@ Bonus
 
 - Full system testing setup (once I have explored what data the system will return, etc.)
 
-# Goal 2: Use the data to implement proper backtesting tools and initial strategies
+## Goal 2: Use the data to implement proper backtesting tools and initial strategies
 
 - [ ] More backtesting tools, fuzzing, optimization, etc.
 - [ ] Implement and verify different strategies.
