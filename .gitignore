@@ -11,3 +11,5 @@ Cargo.lock
 
 /data/local
 test/fixtures
+
+local-notes.md
