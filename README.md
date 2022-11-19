@@ -15,8 +15,6 @@ You can support the development of this tool (give me more time to work on it) b
 
 Open source algorithmic trader with fast backtesting written in [Rust](https://www.rust-lang.org/).
 
-I am by no means an expert in any of this, but I have some experience from exploring trading as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
-
 ## Goal 1: Proof of concept (backtest, two strategies, hardcoded config)
 
 Step 1
@@ -26,6 +24,7 @@ Step 1
   - [x] Be able to run one stock without considering days.
   - [x] Separating into days and running days in parallel.
   - [ ] Simulator (src/simulator.rs)
+    - [ ] Rework parallelism to be about variations and fuzz rather than days
     - [ ] One simple strategy.
     - [ ] Apply strategies and print where it would buy.
     - [ ] Save active position in memory, sell it at end of day if needed.
