@@ -13,7 +13,7 @@ You can support the development of this tool (give me more time to work on it) b
 
 ## Intro
 
-Open source algorithmic trader written in Rust to allow for very quick backtesting. Algorithms are implemented in Rust. Config defines which are used, on which markets and how.
+Open source algorithmic trader written in [Rust](https://www.rust-lang.org/) to allow for very quick backtesting. Algorithms are implemented in Rust. Config defines which are used, on which markets and how.
 
 I am by no means an expert in any of this, but I have some experience from exploring this as a hobby since about 2020. This algotrader is my forth iteration on the concept and the first one that is open source. Taking what I've learned from the previous iterations into this one.
 
