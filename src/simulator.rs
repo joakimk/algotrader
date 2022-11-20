@@ -77,6 +77,7 @@ mod simulate_day {
     #[test]
     fn test_returns_the_expected_result() {
         let settings = Settings {
+            account_size: 3000.0,
             position_size: 1000.0,
             fee_per_transaction: 1.0,
         };

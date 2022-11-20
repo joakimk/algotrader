@@ -58,6 +58,13 @@ pub struct DayResult {
 }
 
 #[derive(Debug)]
+pub struct DayResultBar {
+    pub open : f32,
+    pub close : f32,
+    pub timestamp : u64,
+}
+
+#[derive(Debug)]
 pub struct Trade {
     pub symbol : String,
 
@@ -77,6 +84,7 @@ pub struct Trade {
 
 #[derive(Debug)]
 pub struct Settings {
+    pub account_size : f32,
     pub position_size : f32,
     pub fee_per_transaction : f32,
 }

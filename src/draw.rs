@@ -3,32 +3,18 @@ use cli_candlestick_chart::{Candle, Chart as DrawChart};
 use crate::types::*;
 
 #[allow(dead_code)]
-pub fn draw_day_results(results : &Vec<DayResult>) {
-    let todo_this_duplicates_settings = 1;
-    let minimal_position_amount = 10f32;
-    let position_amount = minimal_position_amount;
-    let account_starting_amount = 1000f32;
-    let mut account_amount = account_starting_amount;
-
+pub fn draw_day_result_bars(bars : &Vec<DayResultBar>) {
     let mut candles : Vec<Candle> = Vec::new();
 
-    for r in results {
-        // todo: is this corrrect, position_amount or full amount?
-        let account_amount_after_this_day = account_amount + (position_amount * (1.0 + (r.percent / 100.0))) - position_amount - r.fee_amount;
-        assert!(account_amount >= minimal_position_amount);
-
-        // candle
-
+    for bar in bars {
         candles.push(Candle {
-           open: account_amount.into(),
-           high: account_amount.into(),
-           low: account_amount.into(),
-           close: account_amount_after_this_day.into(),
+           open: bar.open.into(),
+           high: bar.open.into(),
+           low: bar.open.into(),
+           close: bar.close.into(),
            volume: None,
-           timestamp: Some(r.timestamp as i64)
+           timestamp: Some(bar.timestamp as i64)
         });
-
-        account_amount = account_amount_after_this_day;
     }
 
     // If the time period is long, combine into weeks or months?

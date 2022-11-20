@@ -11,6 +11,7 @@ fn main() {
     let chart = load::load_chart("AZA", 15, "data/local/15/AZA.json");
 
     let settings = Settings {
+        account_size: 3000.0,
         position_size: 1000.0,
         fee_per_transaction: 0f32, // the broker I intend to use for initial testing has zero fees for stocks
     };
@@ -34,7 +35,29 @@ fn main() {
         .map(|day| { simulator::simulate_day(&settings, &chart, day) })
         .collect();
 
-    draw::draw_day_results(&results);
+    // todo: change position size as it goes on, e.g. percentage of current_account_size.
+    // todo: does it handle position size correctly?
+    let mut current_account_size = settings.account_size;
+    let results_as_bars : Vec<DayResultBar> = results.iter()
+        .map(|r| {
+            let open = current_account_size;
+
+            let diff = 1.0 + (r.percent / 100.0);
+            let close = (current_account_size * diff) - r.fee_amount;
+
+            let bar = DayResultBar {
+                open: open,
+                close: close,
+                timestamp: r.timestamp,
+            };
+
+            current_account_size = close;
+
+            bar
+        })
+        .collect();
+
+    draw::draw_day_result_bars(&results_as_bars);
 
     //dbg!(chart.days.len());
     //dbg!(&chart.days[0].date);
