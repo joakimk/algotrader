@@ -3,6 +3,7 @@ use crate::strategies::*;
 use crate::load::*;
 use chrono::prelude::*;
 
+// NOTE: Don't pass anything mutable into this to retain the ability to parallelize this if needed later to keep backtesting fast.
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult {
     let mut trades = Vec::new();
 
