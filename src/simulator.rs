@@ -94,7 +94,7 @@ mod simulate_day {
         // The diff between buy and sell is 3.35%, but we do not use
         // the entire amount so in total the account change is 3.22%.
         // ruby: (1 - (((198.5 * 5) * (192.05/198.5) + (1000 - (198.5 * 5))) / 1000.0)).round(5) * 100
-        assert_eq!(day_result.close_percent, -(3.225));
+        assert_eq!(day_result.percent, -(3.225));
     }
 
     fn load_about_a_month_of_stock_data() -> Chart {
