@@ -46,22 +46,15 @@ pub struct Chart {
 
 #[derive(Debug)]
 pub struct DayResult {
-    // The change we arrived at once all positions where sold.
-    pub percent : f32,
-
     pub timestamp : u64,
     pub time : DateTime<Local>,
 
     pub trades : Vec<Trade>,
 
-    pub fee_amount : f32
-}
+    pub fee_amount : f32,
 
-#[derive(Debug)]
-pub struct DayResultBar {
-    pub open : f32,
-    pub close : f32,
-    pub timestamp : u64,
+    pub account_size_at_open : f32,
+    pub account_size_at_close : f32,
 }
 
 #[derive(Debug)]
@@ -84,8 +77,9 @@ pub struct Trade {
 
 #[derive(Debug)]
 pub struct Settings {
-    pub account_size : f32,
-    pub position_size : f32,
+    pub account_initial_size : f32,
+    pub positions_minimal_amount : f32,
+    pub positions_percentage_of_current_account_size : f32,
     pub fee_per_transaction : f32,
 }
 

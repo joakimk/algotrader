@@ -1,10 +1,8 @@
 use crate::types::*;
 use crate::strategies::*;
-use crate::load::*;
-use chrono::prelude::*;
 
 // NOTE: Don't pass anything mutable into this to retain the ability to parallelize this if needed later to keep backtesting fast.
-pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult {
+pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
 
     bars_today(chart, day).iter().for_each( |bar| {
@@ -14,7 +12,9 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
         if trades.len() == 0 {
             let buy_time = day.open_time;
             let buy_price = day.open;
-            let buy_count = (settings.position_size / buy_price) as u32;
+
+            // todo: use positions_percentage_of_current_account_size as well
+            let buy_count = (settings.positions_minimal_amount / buy_price) as u32;
             let buy_total = (buy_count as f32) * buy_price;
 
             let sell_time = day.close_time;
@@ -27,15 +27,14 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
                 buy_price: buy_price,
                 buy_count: buy_count,
                 rounded_position_amount: ((buy_count as f32) * buy_price) as u32,
-                rounded_position_unused_amount: (settings.position_size - buy_total) as u32,
+                rounded_position_unused_amount: (settings.positions_minimal_amount - buy_total) as u32,
                 sell_price: sell_price,
                 fee_amount: settings.fee_per_transaction * 2.0,
             });
         }
     });
 
-    let starting_account_amount = 100f32;
-    let mut account_amount = starting_account_amount;
+    let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
     for trade in trades.iter() {
@@ -46,14 +45,15 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day) -> DayResult 
         fee_amount += trade.fee_amount;
     }
 
-    let percent = ((account_amount / starting_account_amount) - 1.0) * 10.0;
+    let account_size_at_close = account_amount;
 
     DayResult {
         timestamp: day.open_time.timestamp() as u64,
         time: day.open_time,
-        percent: percent,
         fee_amount: fee_amount,
         trades: trades,
+        account_size_at_open: account_size_at_open,
+        account_size_at_close: account_size_at_close,
     }
 }
 
@@ -73,19 +73,23 @@ fn bars_today(chart: &Chart, day: &Day) -> Vec<Bar> {
 #[cfg(test)]
 mod simulate_day {
     use super::*;
+    use crate::load::*;
+    use chrono::prelude::*;
 
     #[test]
     fn test_returns_the_expected_result() {
         let settings = Settings {
-            account_size: 3000.0,
-            position_size: 1000.0,
+            account_initial_size: 3000.0,
+            positions_minimal_amount: 1300.0,
+            positions_percentage_of_current_account_size: 45.0,
             fee_per_transaction: 1.0,
         };
 
         let chart = load_about_a_month_of_stock_data();
         let day = &chart.days[3];
 
-        let day_result = simulate_day(&settings, &chart, &day);
+        let account_size_before_day = settings.account_initial_size;
+        let day_result = simulate_day(&settings, &chart, &day, account_size_before_day);
 
         dbg!(&day_result);
 
@@ -95,7 +99,9 @@ mod simulate_day {
         // The diff between buy and sell is 3.35%, but we do not use
         // the entire amount so in total the account change is 3.22%.
         // ruby: (1 - (((198.5 * 5) * (192.05/198.5) + (1000 - (198.5 * 5))) / 1000.0)).round(5) * 100
-        assert_eq!(day_result.percent, -(3.225));
+        //assert_eq!(day_result.percent, -(3.225));
+        // todo: reimplement this for open and close account size
+        assert_eq!(false, true);
     }
 
     fn load_about_a_month_of_stock_data() -> Chart {

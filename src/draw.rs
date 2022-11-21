@@ -3,17 +3,17 @@ use cli_candlestick_chart::{Candle, Chart as DrawChart};
 use crate::types::*;
 
 #[allow(dead_code)]
-pub fn draw_day_result_bars(bars : &Vec<DayResultBar>) {
+pub fn draw_day_results(results : &Vec<DayResult>) {
     let mut candles : Vec<Candle> = Vec::new();
 
-    for bar in bars {
+    for r in results {
         candles.push(Candle {
-           open: bar.open.into(),
-           high: bar.open.into(),
-           low: bar.open.into(),
-           close: bar.close.into(),
+           open: r.account_size_at_open.into(),
+           high: r.account_size_at_open.into(),
+           low: r.account_size_at_open.into(),
+           close: r.account_size_at_close.into(),
            volume: None,
-           timestamp: Some(bar.timestamp as i64)
+           timestamp: Some(r.timestamp as i64)
         });
     }
 

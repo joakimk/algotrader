@@ -4,15 +4,20 @@ mod types;
 mod simulator;
 mod strategies;
 
-use rayon::prelude::*;
+//use rayon::prelude::*;
 use crate::types::*;
 
 fn main() {
     let chart = load::load_chart("AZA", 15, "data/local/15/AZA.json");
 
     let settings = Settings {
-        account_size: 3000.0,
-        position_size: 1000.0,
+        account_initial_size: 3000.0,
+
+        //no_new_trades_if_lost_more_than_percent_per_day: "todo",
+        //no_new_trades_if_account_size_is_below: 2000.0,
+        positions_minimal_amount: 1300.0,
+        positions_percentage_of_current_account_size: 45.0,
+
         fee_per_transaction: 0f32, // the broker I intend to use for initial testing has zero fees for stocks
     };
 
@@ -26,38 +31,19 @@ fn main() {
     // over many machines by just splitting up the list.
     //variations.par_iter()
 
-    // If possible have this be a plain map of results so that we can
-    // run a par_iter or even a distributed version of that in case you
-    // want to backtest something that is resource intensive even without
-    // running a lot of different settings (something like backtesting every
-    // tick in the last 10 years over multiple instruments and strategies).
+    let mut current_account_size = settings.account_initial_size;
+    let mut previous_day_fees = 0f32;
     let results : Vec<DayResult> = chart.days.iter()
-        .map(|day| { simulator::simulate_day(&settings, &chart, day) })
-        .collect();
-
-    // todo: change position size as it goes on, e.g. percentage of current_account_size.
-    // todo: does it handle position size correctly?
-    let mut current_account_size = settings.account_size;
-    let results_as_bars : Vec<DayResultBar> = results.iter()
-        .map(|r| {
-            let open = current_account_size;
-
-            let diff = 1.0 + (r.percent / 100.0);
-            let close = (current_account_size * diff) - r.fee_amount;
-
-            let bar = DayResultBar {
-                open: open,
-                close: close,
-                timestamp: r.timestamp,
-            };
-
-            current_account_size = close;
-
-            bar
+        .map(|day| {
+            let account_size_at_open = current_account_size - previous_day_fees;
+            let result = simulator::simulate_day(&settings, &chart, day, account_size_at_open);
+            previous_day_fees = result.fee_amount;
+            current_account_size = result.account_size_at_close;
+            result
         })
         .collect();
 
-    draw::draw_day_result_bars(&results_as_bars);
+    draw::draw_day_results(&results);
 
     //dbg!(chart.days.len());
     //dbg!(&chart.days[0].date);
