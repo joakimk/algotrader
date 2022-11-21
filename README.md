@@ -25,6 +25,8 @@ Step 1
   - [x] Separating into days and running days in parallel.
   - [ ] Simulator (src/simulator.rs)
     - [x] Rework parallelism to be about variations and fuzz rather than days
+    - [x] Rework so that current account size is always available and fees applied to next day
+    - [ ] Review all todos in the code
     - [ ] One simple strategy.
     - [ ] Apply strategies and print where it would buy.
     - [ ] Save active position in memory, sell it at end of day if needed.
