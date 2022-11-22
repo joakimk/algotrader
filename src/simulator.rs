@@ -13,8 +13,8 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
             let buy_time = day.open_time;
             let buy_price = day.open;
 
-            // todo: use positions_percentage_of_current_account_size as well
-            let buy_count = (settings.positions_minimal_amount / buy_price) as u32;
+            // todo: use position_percentage_of_current_account_size as well
+            let buy_count = (settings.position_minimal_amount / buy_price) as u32;
             let buy_total = (buy_count as f32) * buy_price;
 
             let sell_time = day.close_time;
@@ -27,7 +27,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                 buy_price: buy_price,
                 buy_count: buy_count,
                 rounded_position_amount: ((buy_count as f32) * buy_price) as u32,
-                rounded_position_unused_amount: (settings.positions_minimal_amount - buy_total) as u32,
+                rounded_position_unused_amount: (settings.position_minimal_amount - buy_total) as u32,
                 sell_price: sell_price,
                 fee_amount: settings.fee_per_transaction * 2.0,
             });
@@ -40,13 +40,14 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
     let mut fee_amount = 0f32;
 
     // todo: account amount needs to be calculated through out the day since it will affect position size
-    // todo: stop backtest when below positions_minimal_amount
+    // todo: stop backtest when below position_minimal_amount
     for trade in trades.iter() {
         let diff = trade.sell_price / trade.buy_price;
         let position_amount = (trade.buy_count as f32) * trade.buy_price;
         let unused_amount = account_amount - position_amount;
         account_amount = unused_amount + position_amount * diff;
         fee_amount += trade.fee_amount;
+        dbg!(trade);
     }
 
     let account_size_at_close = account_amount;
@@ -84,8 +85,8 @@ mod simulate_day {
     fn test_returns_the_expected_result() {
         let settings = Settings {
             account_initial_size: 3000.0,
-            positions_minimal_amount: 1300.0,
-            positions_percentage_of_current_account_size: 45.0,
+            position_minimal_amount: 1300.0,
+            position_percentage_of_current_account_size: 45.0,
             fee_per_transaction: 1.0,
         };
 

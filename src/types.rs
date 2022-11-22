@@ -78,8 +78,8 @@ pub struct Trade {
 #[derive(Debug)]
 pub struct Settings {
     pub account_initial_size : f32,
-    pub positions_minimal_amount : f32,
-    pub positions_percentage_of_current_account_size : f32,
+    pub position_minimal_amount : f32,
+    pub position_percentage_of_current_account_size : f32,
     pub fee_per_transaction : f32,
 }
 

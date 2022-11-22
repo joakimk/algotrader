@@ -15,8 +15,8 @@ fn main() {
 
         //no_new_trades_if_lost_more_than_percent_per_day: "todo",
         //no_new_trades_if_account_size_is_below: 2000.0,
-        positions_minimal_amount: 1300.0,
-        positions_percentage_of_current_account_size: 45.0,
+        position_minimal_amount: 1300.0,
+        position_percentage_of_current_account_size: 45.0,
 
         fee_per_transaction: 0f32, // the broker I intend to use for initial testing has zero fees for stocks
     };
