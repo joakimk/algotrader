@@ -1,7 +1,6 @@
 use crate::types::*;
 use crate::strategies::*;
 
-// NOTE: Don't pass anything mutable into this to retain the ability to parallelize this if needed later to keep backtesting fast.
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
 
@@ -37,6 +36,8 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
     let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
+    // todo: account amount needs to be calculated through out the day since it will affect position size
+    // todo: stop backtest when below positions_minimal_amount
     for trade in trades.iter() {
         let diff = trade.sell_price / trade.buy_price;
         let position_amount = (trade.buy_count as f32) * trade.buy_price;
