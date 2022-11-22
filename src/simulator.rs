@@ -14,6 +14,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
             let buy_price = day.open;
 
             // todo: use position_percentage_of_current_account_size as well
+            // make this a test ^
             let buy_count = (settings.position_minimal_amount / buy_price) as u32;
             let buy_total = (buy_count as f32) * buy_price;
 
@@ -106,7 +107,15 @@ mod simulate_day {
         // ruby: (1 - (((198.5 * 5) * (192.05/198.5) + (1000 - (198.5 * 5))) / 1000.0)).round(5) * 100
         //assert_eq!(day_result.percent, -(3.225));
         // todo: reimplement this for open and close account size
-        assert_eq!(false, true);
+        //assert_eq!(false, true);
+
+        assert_eq!(day_result.account_size_at_open, settings.account_initial_size);
+
+        // We use 198.5 * 6 for the position, that is 1191
+        // 1300 + 1191 = 109 which is unused.
+        // 1191 decreases by 3.25% to 1152.3
+        // What remains is 1152.3 which if you add the unused 109 you get 1261.3.
+        assert_eq!(day_result.account_size_at_close, 2961.3);
     }
 
     fn load_about_a_month_of_stock_data() -> Chart {
