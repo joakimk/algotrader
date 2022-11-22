@@ -4,11 +4,12 @@ use crate::strategies::*;
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
 
+    let mut previous_day = &chart.days[0];
     bars_today(chart, day).iter().for_each( |bar| {
         simple_buy_trend_strategy::trade(bar);
 
         // WIP: Overslimplified: Buy open, sell close of day.
-        if trades.len() == 0 {
+        if trades.len() == 0 && previous_day.close > previous_day.open {
             let buy_time = day.open_time;
             let buy_price = day.open;
 
@@ -31,6 +32,8 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                 fee_amount: settings.fee_per_transaction * 2.0,
             });
         }
+
+        previous_day = day;
     });
 
     let mut account_amount = account_size_at_open;
