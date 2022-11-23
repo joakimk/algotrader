@@ -14,8 +14,6 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
             let buy_time = day.open_time;
             let buy_price = day.open;
 
-            // todo: use position_percentage_of_current_account_size as well
-            // make this a test ^
             let buy_count = (max_position_size / buy_price) as u32;
             let buy_total = (buy_count as f32) * buy_price;
 
