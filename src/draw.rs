@@ -6,11 +6,23 @@ use crate::types::*;
 pub fn draw_day_results(results : &Vec<DayResult>) {
     let mut candles : Vec<Candle> = Vec::new();
 
+
     for r in results {
+        let high: f32;
+        let low: f32;
+
+        if r.account_size_at_open >= r.account_size_at_close {
+            high = r.account_size_at_open;
+            low = r.account_size_at_close;
+        } else {
+            high = r.account_size_at_close;
+            low = r.account_size_at_open;
+        }
+
         candles.push(Candle {
            open: r.account_size_at_open.into(),
-           high: r.account_size_at_open.into(),
-           low: r.account_size_at_open.into(),
+           high: high.into(),
+           low: low.into(),
            close: r.account_size_at_close.into(),
            volume: None,
            timestamp: Some(r.timestamp as i64)
