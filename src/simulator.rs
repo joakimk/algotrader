@@ -3,8 +3,10 @@ use crate::strategies::*;
 
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
-
     let mut previous_day = &chart.days[0];
+    let mut account_amount = account_size_at_open;
+    let mut fee_amount = 0f32;
+
     bars_today(chart, day).iter().for_each( |bar| {
         simple_buy_trend_strategy::trade(bar);
 
@@ -20,7 +22,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
             let sell_time = day.close_time;
             let sell_price = day.close;
 
-            trades.push(Trade {
+            let trade = Trade {
                 symbol: chart.symbol.to_string(),
                 buy_time: buy_time,
                 sell_time: sell_time,
@@ -30,24 +32,25 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                 rounded_position_unused_amount: (max_position_size - buy_total) as u32,
                 sell_price: sell_price,
                 fee_amount: settings.fee_per_transaction * 2.0,
-            });
+            };
+
+            let diff = trade.sell_price / trade.buy_price;
+            let position_amount = (trade.buy_count as f32) * trade.buy_price;
+            let unused_amount = account_amount - position_amount;
+            account_amount = unused_amount + position_amount * diff;
+            fee_amount += trade.fee_amount;
+
+            if account_amount < settings.position_minimal_amount {
+                // Handle this more gracefully if it ever becomes an issue, e.g. just stop backtest and show results.
+                panic!("Strategy is performing very poorly. Account amount (account_amount) is lower than the minimal position amount (position_minimal_amount).")
+            }
+
+            trades.push(trade);
         }
 
         previous_day = day;
     });
 
-    let mut account_amount = account_size_at_open;
-    let mut fee_amount = 0f32;
-
-    // todo: account amount needs to be calculated through out the day since it will affect position size
-    // todo: stop backtest when below position_minimal_amount
-    for trade in trades.iter() {
-        let diff = trade.sell_price / trade.buy_price;
-        let position_amount = (trade.buy_count as f32) * trade.buy_price;
-        let unused_amount = account_amount - position_amount;
-        account_amount = unused_amount + position_amount * diff;
-        fee_amount += trade.fee_amount;
-    }
 
     let account_size_at_close = account_amount;
 

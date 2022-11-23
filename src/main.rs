@@ -13,8 +13,8 @@ fn main() {
     let settings = Settings {
         account_initial_size: 3000.0,
 
-        //no_new_trades_if_lost_more_than_percent_per_day: "todo",
-        //no_new_trades_if_account_size_is_below: 2000.0,
+        //account_max_loss_percent_per_day: "todo later",
+
         position_minimal_amount: 1300.0,
         position_percentage_of_current_account_size: 45.0,
 
