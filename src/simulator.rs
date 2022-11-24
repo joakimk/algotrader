@@ -3,12 +3,36 @@ use crate::strategies::*;
 
 pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
+    let mut active_trade : Option<ActiveTrade> = None;
     let mut previous_day = &chart.days[0];
     let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
+
     bars_today(chart, day).iter().for_each( |bar| {
-        simple_buy_trend_strategy::trade(bar);
+        let action = simple_buy_trend_strategy::trade(bar, &mut active_trade);
+
+        // WIP
+        match action {
+            TradeAction::None => {}
+            TradeAction::Buy => {
+                if let None = active_trade {
+                    active_trade = Some(ActiveTrade {
+                        symbol: "foo".into(),
+                        buy_time: bar.time,
+                        buy_price: 1.0,
+                        buy_count: 1,
+                        fee_amount: 1.0,
+                    });
+                } else {
+                    panic!("Attempting to buy but we already have an active trade. The strategy did not check.");
+                }
+            }
+            TradeAction::Sell => {
+                // add to trades and then reset
+                active_trade = None;
+            }
+        }
 
         // WIP: Overslimplified: Buy open, sell close of day.
         if trades.len() == 0 && previous_day.close > previous_day.open {

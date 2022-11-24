@@ -58,6 +58,24 @@ pub struct DayResult {
 }
 
 #[derive(Debug)]
+pub struct ActiveTrade {
+    pub symbol : String,
+
+    pub buy_time : DateTime<Local>,
+    pub buy_price : f32,
+    pub buy_count : u32,
+
+    pub fee_amount : f32,
+}
+
+#[derive(Debug)]
+pub enum TradeAction {
+    None,
+    Buy,
+    Sell,
+}
+
+#[derive(Debug)]
 pub struct Trade {
     pub symbol : String,
 
