@@ -28,6 +28,8 @@ Step 1
     - [x] Rework so that current account size is always available and fees applied to next day
     - [x] Review all todos in the code
     - [ ] One simple strategy.
+      - [x] Basic buy and sell structure
+      - [ ] Make trades based on the strategy
     - [ ] Apply strategies and print where it would buy.
     - [ ] Save active position in memory, sell it at end of day if needed.
     - [ ] Collect results and display them.
