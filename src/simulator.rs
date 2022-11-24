@@ -127,7 +127,7 @@ mod simulate_day {
         let account_size_before_day = 3500.0;
         let day_result = simulate_day(&settings, &chart, &day, account_size_before_day);
 
-        dbg!(&day_result);
+        //dbg!(&day_result);
 
         assert_eq!(day_result.trades.len(), 1);
         let trade = &day_result.trades[0];
