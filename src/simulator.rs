@@ -8,7 +8,6 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
     let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
-
     bars_today(chart, day).iter().for_each( |bar| {
         let action = simple_buy_trend_strategy::trade(bar, &mut active_trade);
 
