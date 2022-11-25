@@ -4,6 +4,6 @@ pub fn trade(_chart : &Chart, _day: &Day, _previous_day: &Day, _bar : &Bar, acti
     if let None = active_trade {
         Action::EnterLong
     } else {
-        Action::Hold
+        Action::None
     }
 }

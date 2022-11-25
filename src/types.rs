@@ -70,10 +70,10 @@ pub struct ActiveTrade {
 
 #[derive(Debug)]
 pub enum Action {
-    Hold,
+    None,
     EnterLong,
     //EnterShort,
-    //ExitPosition,
+    //Exit
 }
 
 #[derive(Debug)]
@@ -100,6 +100,7 @@ pub struct Settings {
     pub position_minimal_amount : f32,
     pub position_percentage_of_current_account_size : f32,
     pub fee_per_transaction : f32,
+    pub enabled_strategies : Vec<String>,
 }
 
 // This is the data strategies will have to make decisions

@@ -9,28 +9,30 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
     let mut fee_amount = 0f32;
 
     bars_today(chart, day).iter().for_each( |bar| {
-        let action = simple_buy_daily_trend_strategy::trade(chart, day, previous_day, bar, &active_trade);
+        for strategy in &settings.enabled_strategies {
+            let action = trade_strategy(strategy.into(), chart, day, previous_day, bar, &active_trade);
 
-        // WIP
-        match action {
-            Action::Hold => {}
-            Action::EnterLong => {
-                // We ignore enter signals if we're already in a trade to keep strategy code simple
-                if let None = active_trade {
-                    active_trade = Some(ActiveTrade {
-                        symbol: "foo".into(),
-                        buy_time: bar.time,
-                        buy_price: 1.0,
-                        buy_count: 1,
-                        fee_amount: 1.0,
-                    });
+            // WIP
+            match action {
+                Action::None => {}
+                Action::EnterLong => {
+                    // We ignore enter signals if we're already in a trade to keep strategy code simple
+                    if let None = active_trade {
+                        active_trade = Some(ActiveTrade {
+                            symbol: "foo".into(),
+                            buy_time: bar.time,
+                            buy_price: 1.0,
+                            buy_count: 1,
+                            fee_amount: 1.0,
+                        });
+                    }
                 }
+                //Action::EnterShort => { panic!("Not implemented yet.") }
+                //Action::Exit => {
+                //    // add to trades and then reset
+                //    active_trade = None;
+                //}
             }
-            //Action::EnterShort => { panic!("Not implemented yet.") }
-            //Action::ExitPosition => {
-            //    // add to trades and then reset
-            //    active_trade = None;
-            //}
         }
 
         // WIP: Overslimplified: Buy open, sell close of day.
@@ -114,6 +116,7 @@ mod simulate_day {
             position_minimal_amount: 1300.0,
             position_percentage_of_current_account_size: 45.0,
             fee_per_transaction: 1.0,
+            enabled_strategies: [ "simple_buy_daily_trend_strategy".into() ].to_vec(),
         };
 
         let chart = load_about_a_month_of_stock_data();
@@ -143,6 +146,7 @@ mod simulate_day {
             position_minimal_amount: 1300.0,
             position_percentage_of_current_account_size: 45.0,
             fee_per_transaction: 1.0,
+            enabled_strategies: [ "simple_buy_daily_trend_strategy".into() ].to_vec(),
         };
 
         let chart = load_about_a_month_of_stock_data();
