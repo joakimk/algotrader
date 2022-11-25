@@ -69,11 +69,11 @@ pub struct ActiveTrade {
 }
 
 #[derive(Debug)]
-pub enum TradeAction {
-    None,
-    Long,
-    Short,
-    Exit,
+pub enum Action {
+    Hold,
+    EnterLong,
+    //EnterShort,
+    //ExitPosition,
 }
 
 #[derive(Debug)]

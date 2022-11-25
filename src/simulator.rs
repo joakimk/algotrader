@@ -9,12 +9,13 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
     let mut fee_amount = 0f32;
 
     bars_today(chart, day).iter().for_each( |bar| {
-        let action = simple_buy_trend_strategy::trade(bar, &mut active_trade);
+        let action = simple_buy_daily_trend_strategy::trade(chart, day, previous_day, bar, &active_trade);
 
         // WIP
         match action {
-            TradeAction::None => {}
-            TradeAction::Long => {
+            Action::Hold => {}
+            Action::EnterLong => {
+                // We ignore enter signals if we're already in a trade to keep strategy code simple
                 if let None = active_trade {
                     active_trade = Some(ActiveTrade {
                         symbol: "foo".into(),
@@ -23,15 +24,13 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                         buy_count: 1,
                         fee_amount: 1.0,
                     });
-                } else {
-                    panic!("Attempting to buy but we already have an active trade. The strategy did not check.");
                 }
             }
-            TradeAction::Short => { panic!("Not implemented yet.") }
-            TradeAction::Exit => {
-                // add to trades and then reset
-                active_trade = None;
-            }
+            //Action::EnterShort => { panic!("Not implemented yet.") }
+            //Action::ExitPosition => {
+            //    // add to trades and then reset
+            //    active_trade = None;
+            //}
         }
 
         // WIP: Overslimplified: Buy open, sell close of day.

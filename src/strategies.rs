@@ -1,1 +1,1 @@
-pub mod simple_buy_trend_strategy;
+pub mod simple_buy_daily_trend_strategy;
