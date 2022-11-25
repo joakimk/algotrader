@@ -14,7 +14,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
         // WIP
         match action {
             TradeAction::None => {}
-            TradeAction::Buy => {
+            TradeAction::Long => {
                 if let None = active_trade {
                     active_trade = Some(ActiveTrade {
                         symbol: "foo".into(),
@@ -27,7 +27,8 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                     panic!("Attempting to buy but we already have an active trade. The strategy did not check.");
                 }
             }
-            TradeAction::Sell => {
+            TradeAction::Short => { panic!("Not implemented yet.") }
+            TradeAction::Exit => {
                 // add to trades and then reset
                 active_trade = None;
             }
@@ -74,6 +75,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
         previous_day = day;
     });
 
+    // todo: raise if active trade is still around after day is closed
 
     let account_size_at_close = account_amount;
 
