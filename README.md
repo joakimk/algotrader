@@ -30,12 +30,11 @@ Step 1
     - [x] One simple strategy.
       - [x] Basic buy and sell structure
       - [x] Make trades based on the strategy
-    - [ ] Don't provide full current day data in backtests (e.g. high/low/close since that is future knowledge that won't be available in real trading).
-    - [ ] Figure out why the previous day bug produced so much better results
-    - [ ] Apply strategies and print where it would buy.
-    - [ ] Save active position in memory, sell it at end of day if needed.
-    - [ ] Collect results and display them.
-    - [ ] Manually verify that the trades it took makes sense in reality.
+    - [x] Don't provide full current day data in backtests (e.g. high/low/close since that is future knowledge that won't be available in real trading).
+    - [x] Figure out why the previous day bug produced so much better results (it knew the future)
+    - [ ] Implement moving averages and use that for `simple_buy_daily_trend_strategy`
+    - [ ] Implement some kind of stop loss (and make it easy to do so)
+    - [ ] Display trades and manually verify they makes sense in reality.
   - [ ] Run with live data
     - [ ] Live data API
     - [ ] Run with live data.

@@ -9,11 +9,26 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
 
     let max_position_size = settings.position_minimal_amount.max((settings.position_percentage_of_current_account_size / 100.0) * account_size_at_open);
 
+    let mut high_of_day = chart.bars[0].high;
+    let mut low_of_day = chart.bars[0].low;
+
     bars_today(chart, day).iter().for_each( |bar| {
         for strategy in &settings.enabled_strategies {
-            let action = trade_strategy(strategy.into(), chart, day, previous_day, bar, &active_trade);
+            // Don't provide full day (high, low, close) in backtests since that information won't be available during the day when trading for real.
+            high_of_day = high_of_day.max(bar.high);
+            low_of_day = low_of_day.min(bar.low);
 
-            // WIP
+            let today = PartialDay {
+                date: day.date,
+                open_time: day.open_time,
+                close_time: day.close_time,
+                open: day.open,
+                low: low_of_day,
+                high: high_of_day,
+            };
+
+            let action = trade_strategy(strategy.into(), chart, &today, previous_day, bar, &active_trade);
+
             match action {
                 Action::None => {}
                 Action::EnterLong => {

@@ -37,6 +37,17 @@ pub struct Day {
 }
 
 #[derive(Debug)]
+pub struct PartialDay {
+    pub date : Date<Local>,
+    pub open_time : DateTime<Local>,
+    pub close_time : DateTime<Local>,
+
+    pub open : f32,
+    pub high : f32,
+    pub low : f32,
+}
+
+#[derive(Debug)]
 pub struct Chart {
     pub symbol : String,
     pub timeframe : i32,
