@@ -3,9 +3,11 @@ mod draw;
 mod types;
 mod simulator;
 mod strategies;
+mod strategy_helpers;
 
 //use rayon::prelude::*;
 use crate::types::*;
+use std::env;
 
 fn main() {
     let chart = load::load_chart("AZA", 15, "data/local/15/AZA.json");

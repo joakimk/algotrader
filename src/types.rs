@@ -73,7 +73,7 @@ pub enum Action {
     None,
     EnterLong,
     //EnterShort,
-    //Exit
+    Exit
 }
 
 #[derive(Debug)]

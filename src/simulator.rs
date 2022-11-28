@@ -18,20 +18,28 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
                 Action::EnterLong => {
                     // We ignore enter signals if we're already in a trade to keep strategy code simple
                     if let None = active_trade {
+                        let buy_time = bar.time;
+                        let buy_price = bar.close;
+
+                        let max_position_size = settings.position_minimal_amount.max((settings.position_percentage_of_current_account_size / 100.0) * account_size_at_open);
+                        let buy_count = (max_position_size / buy_price) as u32;
+
                         active_trade = Some(ActiveTrade {
-                            symbol: "foo".into(),
-                            buy_time: bar.time,
-                            buy_price: 1.0,
-                            buy_count: 1,
-                            fee_amount: 1.0,
+                            symbol: chart.symbol.to_string(),
+                            buy_time: buy_time,
+                            buy_price: buy_price,
+                            buy_count: buy_count,
+                            fee_amount: settings.fee_per_transaction * 2.0,
                         });
+
+                        //dbg!(&active_trade);
                     }
                 }
                 //Action::EnterShort => { panic!("Not implemented yet.") }
-                //Action::Exit => {
-                //    // add to trades and then reset
-                //    active_trade = None;
-                //}
+                Action::Exit => {
+                    // add to trades and then reset
+                    active_trade = None;
+                }
             }
         }
 
