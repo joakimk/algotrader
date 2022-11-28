@@ -36,10 +36,12 @@ fn main() {
 
     let mut current_account_size = settings.account_initial_size;
     let mut previous_day_fees = 0f32;
+    let mut previous_day = &chart.days[0];
     let results : Vec<DayResult> = chart.days.iter()
         .map(|day| {
             let account_size_at_open = current_account_size - previous_day_fees;
-            let result = simulator::simulate_day(&settings, &chart, day, account_size_at_open);
+            let result = simulator::simulate_day(&settings, &chart, day, previous_day, account_size_at_open);
+            previous_day = day;
             previous_day_fees = result.fee_amount;
             current_account_size = result.account_size_at_close;
             result

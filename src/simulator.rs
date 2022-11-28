@@ -1,10 +1,9 @@
 use crate::types::*;
 use crate::strategies::*;
 
-pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_at_open: f32) -> DayResult {
+pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day: &Day, account_size_at_open: f32) -> DayResult {
     let mut trades = Vec::new();
     let mut active_trade : Option<ActiveTrade> = None;
-    let mut previous_day = &chart.days[0];
     let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
@@ -80,8 +79,6 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, account_size_
 
             trades.push(trade);
         }
-
-        previous_day = day;
     });
 
     // todo: raise if active trade is still around after day is closed
