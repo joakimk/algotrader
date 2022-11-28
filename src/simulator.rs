@@ -7,6 +7,8 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
     let mut account_amount = account_size_at_open;
     let mut fee_amount = 0f32;
 
+    let max_position_size = settings.position_minimal_amount.max((settings.position_percentage_of_current_account_size / 100.0) * account_size_at_open);
+
     bars_today(chart, day).iter().for_each( |bar| {
         for strategy in &settings.enabled_strategies {
             let action = trade_strategy(strategy.into(), chart, day, previous_day, bar, &active_trade);
@@ -20,7 +22,6 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
                         let buy_time = bar.time;
                         let buy_price = bar.close;
 
-                        let max_position_size = settings.position_minimal_amount.max((settings.position_percentage_of_current_account_size / 100.0) * account_size_at_open);
                         let buy_count = (max_position_size / buy_price) as u32;
 
                         active_trade = Some(ActiveTrade {
@@ -36,62 +37,59 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
                 }
                 //Action::EnterShort => { panic!("Not implemented yet.") }
                 Action::Exit => {
-                    // add to trades and then reset
-                    active_trade = None;
+                    if let None = active_trade {
+                        // Nothing to do.
+                    } else {
+                        let at = active_trade.as_ref().unwrap();
+                        let buy_count = at.buy_count;
+                        let buy_price = at.buy_price;
+                        let buy_total = (buy_count as f32) * buy_price;
+
+                        let trade = Trade {
+                            symbol: at.symbol.clone().into(),
+                            buy_time: at.buy_time,
+                            sell_time: bar.time,
+                            buy_price: buy_price,
+                            buy_count: buy_count,
+                            rounded_position_amount: ((buy_count as f32) * buy_price) as u32,
+                            rounded_position_unused_amount: (max_position_size - buy_total) as u32,
+                            sell_price: bar.close,
+                            fee_amount: settings.fee_per_transaction * 2.0,
+                        };
+
+                        let diff = trade.sell_price / trade.buy_price;
+                        let position_amount = (trade.buy_count as f32) * trade.buy_price;
+                        let unused_amount = account_amount - position_amount;
+                        account_amount = unused_amount + position_amount * diff;
+                        fee_amount += trade.fee_amount;
+
+                        if account_amount < settings.position_minimal_amount {
+                            // Handle this more gracefully if it ever becomes an issue, e.g. just stop backtest and show results.
+                            panic!("Strategy is performing very poorly. Account amount (account_amount) is lower than the minimal position amount (position_minimal_amount).")
+                        }
+
+                        trades.push(trade);
+
+                        active_trade = None;
+                    }
                 }
             }
         }
-
-        // WIP: Overslimplified: Buy open, sell close of day.
-        if trades.len() == 0 && previous_day.close > previous_day.open {
-            let max_position_size = settings.position_minimal_amount.max((settings.position_percentage_of_current_account_size / 100.0) * account_size_at_open);
-            let buy_time = day.open_time;
-            let buy_price = day.open;
-
-            let buy_count = (max_position_size / buy_price) as u32;
-            let buy_total = (buy_count as f32) * buy_price;
-
-            let sell_time = day.close_time;
-            let sell_price = day.close;
-
-            let trade = Trade {
-                symbol: chart.symbol.to_string(),
-                buy_time: buy_time,
-                sell_time: sell_time,
-                buy_price: buy_price,
-                buy_count: buy_count,
-                rounded_position_amount: ((buy_count as f32) * buy_price) as u32,
-                rounded_position_unused_amount: (max_position_size - buy_total) as u32,
-                sell_price: sell_price,
-                fee_amount: settings.fee_per_transaction * 2.0,
-            };
-
-            let diff = trade.sell_price / trade.buy_price;
-            let position_amount = (trade.buy_count as f32) * trade.buy_price;
-            let unused_amount = account_amount - position_amount;
-            account_amount = unused_amount + position_amount * diff;
-            fee_amount += trade.fee_amount;
-
-            if account_amount < settings.position_minimal_amount {
-                // Handle this more gracefully if it ever becomes an issue, e.g. just stop backtest and show results.
-                panic!("Strategy is performing very poorly. Account amount (account_amount) is lower than the minimal position amount (position_minimal_amount).")
-            }
-
-            trades.push(trade);
-        }
     });
 
-    // todo: raise if active trade is still around after day is closed
+    if let None = active_trade {
+        let account_size_at_close = account_amount;
 
-    let account_size_at_close = account_amount;
-
-    DayResult {
-        timestamp: day.open_time.timestamp() as u64,
-        time: day.open_time,
-        fee_amount: fee_amount,
-        trades: trades,
-        account_size_at_open: account_size_at_open,
-        account_size_at_close: account_size_at_close,
+        DayResult {
+            timestamp: day.open_time.timestamp() as u64,
+            time: day.open_time,
+            fee_amount: fee_amount,
+            trades: trades,
+            account_size_at_open: account_size_at_open,
+            account_size_at_close: account_size_at_close,
+        }
+    } else {
+        panic!("There is still an active trade around at day close ({:?}): {:?}. Make sure strategies sell positions before close.", day.close_time, active_trade.unwrap())
     }
 }
 

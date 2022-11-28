@@ -27,9 +27,11 @@ Step 1
     - [x] Rework parallelism to be about variations and fuzz rather than days
     - [x] Rework so that current account size is always available and fees applied to next day
     - [x] Review all todos in the code
-    - [ ] One simple strategy.
+    - [x] One simple strategy.
       - [x] Basic buy and sell structure
-      - [ ] Make trades based on the strategy
+      - [x] Make trades based on the strategy
+    - [ ] Don't provide full current day data in backtests (e.g. high/low/close since that is future knowledge that won't be available in real trading).
+    - [ ] Figure out why the previous day bug produced so much better results
     - [ ] Apply strategies and print where it would buy.
     - [ ] Save active position in memory, sell it at end of day if needed.
     - [ ] Collect results and display them.
