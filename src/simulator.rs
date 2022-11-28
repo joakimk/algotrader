@@ -18,14 +18,7 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
             high_of_day = high_of_day.max(bar.high);
             low_of_day = low_of_day.min(bar.low);
 
-            let today = PartialDay {
-                date: day.date,
-                open_time: day.open_time,
-                close_time: day.close_time,
-                open: day.open,
-                low: low_of_day,
-                high: high_of_day,
-            };
+            let today = day.to_partial_day(high_of_day, low_of_day);
 
             let action = trade_strategy(strategy.into(), chart, &today, previous_day, bar, &active_trade);
 
@@ -138,10 +131,11 @@ mod simulate_day {
         };
 
         let chart = load_about_a_month_of_stock_data();
+        let previous_day = &chart.days[2];
         let day = &chart.days[3];
 
         let account_size_before_day = settings.account_initial_size;
-        let day_result = simulate_day(&settings, &chart, &day, account_size_before_day);
+        let day_result = simulate_day(&settings, &chart, &day, &previous_day, account_size_before_day);
 
         //dbg!(&day_result);
 
@@ -150,11 +144,12 @@ mod simulate_day {
 
         assert_eq!(day_result.account_size_at_open, settings.account_initial_size);
 
-        // We use 198.5 * 6 for the position, that is 1191
-        // 1300 + 1191 = 109 which is unused.
-        // 1191 decreases by 3.25% to 1152.3
-        // What remains is 1152.3 which if you add the unused 109 you get 1261.3.
-        assert_eq!(day_result.account_size_at_close, 2961.3);
+        // We use 196.7 * 6 for the position, that is 1180
+        // 1300 - 1180 = 120 which is unused.
+        // 1180 decreases by 2.54% to 1150
+        // What remains is 1150 which if you add the unused 120 you get 1270.
+        // 1300 - 1270 = 30. 3000 - 30 = 2970.
+        assert_eq!(day_result.account_size_at_close, 2970.0);
     }
 
     #[test]
@@ -168,10 +163,11 @@ mod simulate_day {
         };
 
         let chart = load_about_a_month_of_stock_data();
+        let previous_day = &chart.days[2];
         let day = &chart.days[3];
 
         let account_size_before_day = 3500.0;
-        let day_result = simulate_day(&settings, &chart, &day, account_size_before_day);
+        let day_result = simulate_day(&settings, &chart, &day, &previous_day, account_size_before_day);
 
         //dbg!(&day_result);
 

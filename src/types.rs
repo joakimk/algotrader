@@ -47,6 +47,19 @@ pub struct PartialDay {
     pub low : f32,
 }
 
+impl Day {
+    pub fn to_partial_day(&self, high : f32, low : f32) -> PartialDay {
+        PartialDay {
+            date: self.date,
+            open_time: self.open_time,
+            close_time: self.close_time,
+            open: self.open,
+            low: low,
+            high: high,
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct Chart {
     pub symbol : String,
