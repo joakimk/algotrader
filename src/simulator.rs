@@ -12,15 +12,19 @@ pub fn simulate_day(settings: &Settings, chart: &Chart, day: &Day, previous_day:
     let mut high_of_day = chart.bars[0].high;
     let mut low_of_day = chart.bars[0].low;
 
+    let mut all_bars_until_now = bars_before_today(chart, day);
     bars_today(chart, day).iter().for_each( |bar| {
+        // This limits the data strategies can see to what's available up to the latest bar
+        // so that we can't accidentally make use of futute knowledge in strategies that
+        // won't work when trading for real.
+        high_of_day = high_of_day.max(bar.high);
+        low_of_day = low_of_day.min(bar.low);
+        let today = day.to_partial_day(high_of_day, low_of_day);
+
+        all_bars_until_now.push(*bar);
+
         for strategy in &settings.enabled_strategies {
-            // Don't provide full day (high, low, close) in backtests since that information won't be available during the day when trading for real.
-            high_of_day = high_of_day.max(bar.high);
-            low_of_day = low_of_day.min(bar.low);
-
-            let today = day.to_partial_day(high_of_day, low_of_day);
-
-            let action = trade_strategy(strategy.into(), chart, &today, previous_day, bar, &active_trade);
+            let action = trade_strategy(strategy.into(), &chart.symbol, &all_bars_until_now, &today, previous_day, bar, &active_trade);
 
             match action {
                 Action::None => {}
@@ -107,6 +111,18 @@ fn bars_today(chart: &Chart, day: &Day) -> Vec<Bar> {
 
     for bar in &chart.bars {
         if bar.time >= day.open_time && bar.time <= day.close_time {
+            bars.push(*bar);
+        }
+    }
+
+    bars
+}
+
+fn bars_before_today(chart: &Chart, today: &Day) -> Vec<Bar> {
+    let mut bars : Vec<Bar> = Vec::new();
+
+    for bar in &chart.bars {
+        if bar.time <= today.open_time {
             bars.push(*bar);
         }
     }

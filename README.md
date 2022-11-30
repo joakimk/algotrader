@@ -32,6 +32,7 @@ Step 1
       - [x] Make trades based on the strategy
     - [x] Don't provide full current day data in backtests (e.g. high/low/close since that is future knowledge that won't be available in real trading).
     - [x] Figure out why the previous day bug produced so much better results (it knew the future)
+    - [x] Rework data so that the strategies can't access any future data accidentally.
     - [ ] Implement moving averages and use that for `simple_buy_daily_trend_strategy`
     - [ ] Implement some kind of stop loss (and make it easy to do so)
     - [ ] Display trades and manually verify they makes sense in reality.
