@@ -19,7 +19,7 @@ fn main() {
         position_percentage_of_current_account_size: 45.0,
 
         enabled_strategies: [
-            //"simple_buy_daily_trend_strategy".into(),
+            "simple_buy_daily_trend_strategy".into(),
             "gap_up_reversal_long_strategy".into(),
         ].to_vec(),
         fee_per_transaction: 0f32, // the broker I intend to use for initial testing has zero fees for stocks
