@@ -136,7 +136,7 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 
 ## Unfinished broker integrations
 
-- [Fix API](https://help.ctrader.com/fix/#advanced-trading-robots) seems very intresting since it can work with many brokers and seems to be free (?) to use on for example skilling when using c-trader. That also has the benefit of very small spreads and almost no fees.
+- [Fix API](https://help.ctrader.com/fix/#advanced-trading-robots) seems very intresting since it can work with many brokers and seems to be free (?) to use on for example skilling when using c-trader. That also has the benefit of very small spreads, almost no fees and very reliable TP/Stop orders (as far as I have experienced trading manually for a while).
 - [Nordnet](https://github.com/joakimk/algotrader-nordnet)
 
 ## Related resources
