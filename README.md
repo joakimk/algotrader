@@ -137,8 +137,8 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 ## Unfinished broker integrations
 
 - Fix API
-  - Very intresting since it can work with many brokers and seems to be free (?) to use on for example Skilling when using c-trader.
-  - That also has the benefit of very small spreads, almost no fees and very reliable TP/Stop orders (market orders will stop out almost exactly where you say except in exceptional cases where the market moves very quicky).
+  - It is intresting since it can work with many brokers and seems to be free (?) to use on for example Skilling when using c-trader.
+  - Skilling also has the benefit of very small spreads, almost no fees and very reliable TP/Stop orders (market orders will stop out almost exactly where you say except in exceptional cases where the market moves very quicky).
   - "A [FIX API](https://help.ctrader.com/fix/#advanced-trading-robots) can be obtained via cTrader with no conditions applied such as minimum trading volume or minimum deposit size.".
 - [Nordnet](https://github.com/joakimk/algotrader-nordnet)
 
