@@ -38,7 +38,8 @@ Step 1
     - [ ] Select a market and implement strategy that works on a short time frame
     - [ ] Display trades and manually verify they makes sense in reality.
   - [ ] Run with live data
-    - [ ] Live data API
+    - [ ] Live data API using FIX/Skilling
+    - [ ] Backtest and adapt with Skilling data
     - [ ] Run with live data.
     - [ ] Manual buy and sell notifications as default fallback API.
 
@@ -145,6 +146,7 @@ Contributions are very welcome, but be aware I don't always have a lot of spare 
 ## Related resources
 
 - https://www.youtube.com/c/CriticalTrading
+- Another trading tool in rust https://github.com/barter-rs/barter-rs with slightly different goals and design.
 
 ## Various backtest inspiration
 
