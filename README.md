@@ -1,5 +1,7 @@
 # algotrader
 
+**Paused**: Currently paused while I work to set up a good set of [cTrader bots](https://github.com/joakimk/ctrader-cbots) and learn all I can from that experience.
+
 WIP: Work in progress.
 
 ## Intro
